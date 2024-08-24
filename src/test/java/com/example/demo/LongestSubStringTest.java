@@ -28,4 +28,9 @@ class LongestSubStringTest {
     void shouldReturnOneWhenStringIsSpace(){
         assertEquals(1, longestSubString.lengthOfLongestSubstring(" "));
     }
+
+    @Test
+    void test4(){
+        assertEquals(3, longestSubString.lengthOfLongestSubstring("dvdf"));
+    }
 }

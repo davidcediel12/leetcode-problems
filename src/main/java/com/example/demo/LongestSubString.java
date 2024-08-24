@@ -9,20 +9,23 @@ public class LongestSubString {
         int maxLength = 0;
         int length = 0;
 
-        for(int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if(potentialSubString.toString().contains(String.valueOf(c))){
-                if(length > maxLength){
-                    subString = potentialSubString.toString();
-                    potentialSubString = new StringBuilder(String.valueOf(s.charAt(i)));
-                    maxLength = length;
+
+        for(int init = 0; init < s.length(); init ++) {
+            boolean repeatedChar = false;
+            int window = init;
+            while (!repeatedChar && window < s.length()) {
+                char c = s.charAt(window);
+                if (potentialSubString.toString().contains(String.valueOf(c))) {
+                    repeatedChar = true;
+                    if (length > maxLength) {
+                        subString = potentialSubString.toString();
+                        maxLength = length;
+                    }
+                } else {
+                    length++;
+                    potentialSubString.append(c);
                 }
-
-                length = 1;
-
-            } else {
-                length++;
-                potentialSubString.append(c);
+                window++;
             }
         }
         System.out.println(subString);
