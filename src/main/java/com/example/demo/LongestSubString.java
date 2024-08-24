@@ -4,31 +4,28 @@ public class LongestSubString {
 
     public int lengthOfLongestSubstring(String s) {
 
-        String subString = "";
-        String result =  "";
+        StringBuilder subString = new StringBuilder();
         int maxLength = 0;
         int length = 0;
 
 
         for (int i = 0; i < s.length(); i++) {
             String currentChar = String.valueOf(s.charAt(i));
-            boolean containsChar= subString.contains(currentChar);
+            boolean containsChar = subString.indexOf(currentChar) >= 0;
 
-            subString = subString + currentChar;
+            subString.append(currentChar);
 
             if (containsChar) {
-                subString = subString.substring(subString.indexOf(currentChar) + 1);
+                subString.delete(0, subString.indexOf(currentChar) + 1);
                 length = subString.length();
             } else {
-                length ++;
+                length++;
             }
-            if(length > maxLength) {
-                result = subString;
+            if (length > maxLength) {
                 maxLength = length;
             }
 
         }
-        System.out.println("RESULT: " + result);
         return maxLength;
     }
 
