@@ -2,31 +2,19 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class SolutionTest {
+class SolutionTest {
 
-
-    @Test
-    public void test() {
-
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        List<Integer> list2 = list;
-
-        list2.remove(0);
-
-        System.out.println(list);
-        System.out.println(list2);
-    }
 
     @Test
     void testSameNumbers(){
         var solution = new Solution();
 
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{0, 4, 3, 0}, 0)));
+        int[] actual = solution.twoSum(new int[]{0, 4, 3, 0}, 0);
+        assertArrayEquals(new int[]{0, 3}, actual);
+
+
     }
 
 
@@ -35,7 +23,9 @@ public class SolutionTest {
         var solution = new Solution();
 
 
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{3, 2, 4}, 6)));
+        int[] actual = solution.twoSum(new int[]{3, 2, 4}, 6);
+        assertArrayEquals(new int[]{1, 2}, actual);
+
     }
 
     @Test
@@ -43,7 +33,9 @@ public class SolutionTest {
         var solution = new Solution();
 
 
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{-3,4,3,90}, 0)));
+        int[] actual = solution.twoSum(new int[]{-3,4,3,90}, 0);
+        assertArrayEquals(new int[]{0, 2}, actual);
+
     }
 
 
@@ -52,7 +44,9 @@ public class SolutionTest {
         var solution = new Solution();
 
 
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{5,75,25}, 100)));
+        int[] actual = solution.twoSum(new int[]{5,75,25}, 100);
+        assertArrayEquals(new int[]{1, 2}, actual);
+
     }
 
 
@@ -61,7 +55,8 @@ public class SolutionTest {
         var solution = new Solution();
 
 
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{3, 2, 3}, 6)));
+        int[] actual = solution.twoSum(new int[]{3, 2, 3}, 6);
+        assertArrayEquals(new int[]{0, 2}, actual);
     }
 
 
@@ -70,7 +65,8 @@ public class SolutionTest {
         var solution = new Solution();
 
 
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{1,6142,8192,10239}, 18431)));
+        int[] actual = solution.twoSum(new int[]{1,6142,8192,10239}, 18431);
+        assertArrayEquals(new int[]{2, 3}, actual);
     }
 
 
