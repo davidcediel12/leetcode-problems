@@ -10,34 +10,38 @@ public class LongestSubString {
         int length = 0;
 
 
-        for(int init = 0; init < s.length(); init ++) {
+        for (int init = 0; init < s.length(); init++) {
+            if (maxLength > (s.length() - init) + length) {
+                return maxLength;
+            }
+
             boolean repeatedChar = false;
             int window = init;
-
-            if(maxLength > (s.length() - init) + length){
-
-                return  maxLength;
-            }
+            length = 0;
 
             while (!repeatedChar && window < s.length()) {
                 char c = s.charAt(window);
                 if (potentialSubString.toString().contains(String.valueOf(c))) {
                     repeatedChar = true;
-                    if (length > maxLength) {
-                        subString = potentialSubString.toString();
-                        maxLength = length;
-                    }
+
+                    potentialSubString = new StringBuilder();
+
                 } else {
                     length++;
                     potentialSubString.append(c);
                 }
+
+                if (length > maxLength) {
+                    subString = potentialSubString.toString();
+                    maxLength = length;
+                }
+
                 window++;
             }
         }
         System.out.println(subString);
         return Math.max(maxLength, length);
     }
-
 
 
 }
