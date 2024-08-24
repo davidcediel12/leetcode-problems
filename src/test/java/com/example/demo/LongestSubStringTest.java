@@ -17,4 +17,15 @@ class LongestSubStringTest {
     void shouldReturnOneWhenAllLettersAreTheSame(){
         assertEquals(1, longestSubString.lengthOfLongestSubstring("bbbbb"));
     }
+
+
+    @Test
+    void shouldReturnZeroWhenStringIsEmpty(){
+        assertEquals(0, longestSubString.lengthOfLongestSubstring(""));
+    }
+
+    @Test
+    void shouldReturnOneWhenStringIsSpace(){
+        assertEquals(1, longestSubString.lengthOfLongestSubstring(" "));
+    }
 }
