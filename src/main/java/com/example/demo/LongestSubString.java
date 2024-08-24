@@ -13,6 +13,12 @@ public class LongestSubString {
         for(int init = 0; init < s.length(); init ++) {
             boolean repeatedChar = false;
             int window = init;
+
+            if(maxLength > (s.length() - init) + length){
+
+                return  maxLength;
+            }
+
             while (!repeatedChar && window < s.length()) {
                 char c = s.charAt(window);
                 if (potentialSubString.toString().contains(String.valueOf(c))) {
