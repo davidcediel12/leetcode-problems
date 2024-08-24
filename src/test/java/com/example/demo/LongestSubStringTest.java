@@ -31,7 +31,7 @@ class LongestSubStringTest {
 
     @Test
     void test4(){
-        assertEquals(3, longestSubString.lengthOfLongestSubstring("dvdf"));
+        assertEquals(5, longestSubString.lengthOfLongestSubstring("dvdaxvf"));
     }
 
     @Test
