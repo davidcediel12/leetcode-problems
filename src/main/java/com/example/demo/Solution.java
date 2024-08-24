@@ -24,8 +24,12 @@ class Solution {
 
 
             List<List<Integer>> toMakeBinarySearch = new ArrayList<>(numbersWithIndex);
-
-            toMakeBinarySearch.remove(i);
+            if(missingNumber >= n1) {
+                int startingPoint = Math.min(numbersWithIndex.size() - 1, i + 1);
+                toMakeBinarySearch = toMakeBinarySearch.subList(startingPoint, numbersWithIndex.size());
+            } else {
+                toMakeBinarySearch = toMakeBinarySearch.subList(0, i);
+            }
 
             List<Integer> n2WithIndex = binarySearch(toMakeBinarySearch, missingNumber);
 
