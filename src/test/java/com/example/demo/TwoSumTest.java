@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-class SolutionTest {
+class TwoSumTest {
     
-    Solution solution = new Solution();
+    TwoSum twoSum = new TwoSum();
 
     @Test
     void testSameNumbers(){
-        int[] actual = solution.twoSum(new int[]{0, 4, 3, 0}, 0);
+        int[] actual = twoSum.twoSum(new int[]{0, 4, 3, 0}, 0);
         assertArrayEquals(new int[]{0, 3}, actual);
 
 
@@ -20,14 +20,14 @@ class SolutionTest {
 
     @Test
     void test2(){
-        int[] actual = solution.twoSum(new int[]{3, 2, 4}, 6);
+        int[] actual = twoSum.twoSum(new int[]{3, 2, 4}, 6);
         assertArrayEquals(new int[]{1, 2}, actual);
 
     }
 
     @Test
     void test3(){
-        int[] actual = solution.twoSum(new int[]{-3,4,3,90}, 0);
+        int[] actual = twoSum.twoSum(new int[]{-3,4,3,90}, 0);
         Assertions.assertThat(actual).containsExactlyInAnyOrder(0, 2);
 
     }
@@ -35,7 +35,7 @@ class SolutionTest {
 
     @Test
     void test4(){
-        int[] actual = solution.twoSum(new int[]{5,75,25}, 100);
+        int[] actual = twoSum.twoSum(new int[]{5,75,25}, 100);
         Assertions.assertThat(actual).containsExactlyInAnyOrder(1, 2);
 
     }
@@ -43,14 +43,14 @@ class SolutionTest {
 
     @Test
     void test5(){
-        int[] actual = solution.twoSum(new int[]{3, 2, 3}, 6);
+        int[] actual = twoSum.twoSum(new int[]{3, 2, 3}, 6);
         Assertions.assertThat(actual).containsExactlyInAnyOrder(0, 2);
     }
 
 
     @Test
     void test6(){
-        int[] actual = solution.twoSum(new int[]{1,6142,8192,10239}, 18431);
+        int[] actual = twoSum.twoSum(new int[]{1,6142,8192,10239}, 18431);
         Assertions.assertThat(actual).containsExactlyInAnyOrder(2, 3);
     }
 
