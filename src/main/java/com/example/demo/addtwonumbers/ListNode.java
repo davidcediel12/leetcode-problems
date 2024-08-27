@@ -1,4 +1,4 @@
-package com.example.demo.addTwoNumbers;
+package com.example.demo.addtwonumbers;
 
 public class ListNode {
     int val;
