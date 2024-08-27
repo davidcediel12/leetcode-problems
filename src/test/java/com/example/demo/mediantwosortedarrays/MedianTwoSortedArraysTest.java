@@ -38,4 +38,18 @@ class MedianTwoSortedArraysTest {
         assertEquals(2.5, median);
     }
 
+    @Test
+    void shouldIgnoreFirstArrayIfIsEmpty(){
+        double median = extractor.findMedianSortedArrays(new int[]{}, new int[]{2, 3});
+
+        assertEquals(2.5, median);
+    }
+
+    @Test
+    void shouldIgnoreSecondArrayIfIsEmpty(){
+        double median = extractor.findMedianSortedArrays(new int[]{3, 4}, new int[]{});
+
+        assertEquals(3.5, median);
+    }
+
 }
