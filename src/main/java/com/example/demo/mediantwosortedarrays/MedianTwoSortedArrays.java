@@ -1,5 +1,7 @@
 package com.example.demo.mediantwosortedarrays;
 
+import java.util.HashSet;
+
 public class MedianTwoSortedArrays {
 
 
@@ -17,33 +19,45 @@ public class MedianTwoSortedArrays {
         }
 
         int i = 0, j = 0;
+
         double counter = 0;
-        int currentNumber;
         boolean modifiedCounter = false;
+
+        int currentNumber;
 
         boolean movedI = true, movedJ = true;
 
         boolean finishedFirstArray = nums1.length == 0;
         boolean finishedSecondArray = nums2.length == 0;
 
+        HashSet<Integer> usedIndexesFirstArr = new HashSet<>();
+        HashSet<Integer> usedIndexesSecondArr = new HashSet<>();
+
+
         while (!finishedFirstArray || !finishedSecondArray) {
 
             if (finishedSecondArray) {
                 currentNumber = nums1[i];
+                usedIndexesFirstArr.add(i);
                 if (i + 1 == nums1.length) {
                     finishedFirstArray = true;
                 }
             } else if (finishedFirstArray) {
                 currentNumber = nums2[j];
+                usedIndexesSecondArr.add(j);
                 if (j + 1 == nums2.length) {
                     finishedSecondArray = true;
                 }
             } else {
-                if (nums1[i] <= nums2[j]) {
+                if (usedIndexesSecondArr.contains(j) ||
+                        (nums1[i] <= nums2[j] && !usedIndexesFirstArr.contains(i))) {
+
                     currentNumber = nums1[i];
+                    usedIndexesFirstArr.add(i);
                     finishedFirstArray = i == nums1.length - 1;
                 } else {
                     currentNumber = nums2[j];
+                    usedIndexesSecondArr.add(j);
                     finishedSecondArray = j == nums2.length - 1;
                 }
             }
