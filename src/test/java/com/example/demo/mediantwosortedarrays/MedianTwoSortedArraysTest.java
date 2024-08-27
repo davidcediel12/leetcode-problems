@@ -22,4 +22,12 @@ class MedianTwoSortedArraysTest {
 
         assertEquals(2.5, median);
     }
+
+    @Test
+    void shouldReturnUniqueNumberIfThereIsOnlyOneNumber(){
+        double median = extractor.findMedianSortedArrays(new int[]{}, new int[]{1});
+
+        assertEquals(1, median);
+    }
+
 }

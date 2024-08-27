@@ -23,22 +23,29 @@ public class MedianTwoSortedArrays {
 
         boolean movedI = true, movedJ = true;
 
-        boolean finishedFirstArray = false, finishedSecondArray = false;
+        boolean finishedFirstArray = nums1.length == 0;
+        boolean finishedSecondArray = nums2.length == 0;
 
-        while (i < nums1.length - 1 || j < nums1.length - 1) {
+        while (!finishedFirstArray || !finishedSecondArray) {
 
-            if((nums1[i] <= nums2[j] && !finishedFirstArray) || finishedSecondArray){
+            if (finishedSecondArray) {
                 currentNumber = nums1[i];
                 if (i + 1 == nums1.length) {
                     finishedFirstArray = true;
                 }
-            } else if ((nums2[j] <= nums1[i] && !finishedSecondArray) || finishedFirstArray){
+            } else if (finishedFirstArray) {
                 currentNumber = nums2[j];
                 if (j + 1 == nums2.length) {
                     finishedSecondArray = true;
                 }
             } else {
-                return 0;
+                if (nums1[i] <= nums2[j]) {
+                    currentNumber = nums1[i];
+                    finishedFirstArray = i == nums1.length - 1;
+                } else {
+                    currentNumber = nums2[j];
+                    finishedSecondArray = j == nums2.length - 1;
+                }
             }
 
             if (position >= midPoint) {
