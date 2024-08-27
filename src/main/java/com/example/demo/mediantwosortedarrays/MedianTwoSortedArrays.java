@@ -39,8 +39,6 @@ public class MedianTwoSortedArrays {
         double counter = 0;
         boolean modifiedCounter = false;
 
-        boolean movedI = true, movedJ = true;
-
         finishedFirstArray = nums1.length == 0;
         finishedSecondArray = nums2.length == 0;
 
@@ -49,9 +47,8 @@ public class MedianTwoSortedArrays {
 
 
         while (!finishedFirstArray || !finishedSecondArray) {
-
+            findCurrentNumber(usedIndexesFirstArr, usedIndexesSecondArr);
             if (position >= midPoint) {
-                findCurrentNumber(usedIndexesFirstArr, usedIndexesSecondArr);
                 if (isLengthEven) {
                     if (!modifiedCounter) {
                         counter += currentNumber;
@@ -64,26 +61,12 @@ public class MedianTwoSortedArrays {
                 }
             }
 
-
-            boolean moveOnFirstArray = finishedSecondArray ||
-                    (!finishedFirstArray && nums1[i] <= nums2[j] && i + 1 < nums1.length);
-
-            if (moveOnFirstArray) {
-                if (movedI) {
-                    i++;
-                    movedJ = false;
-                } else {
-                    movedI = true;
-                    movedJ = false;
-                }
-            } else {
-                if (movedJ) {
-                    j++;
-                    movedI = false;
-                } else {
-                    movedJ = true;
-                    movedI = false;
-                }
+            boolean moveFirstIndex = usedIndexesFirstArr.contains(i) && i + 1 < nums1.length;
+            boolean moveSecondIndex = usedIndexesSecondArr.contains(j) && j + 1 < nums2.length;
+            if (moveFirstIndex) {
+                i++;
+            } else if (moveSecondIndex){
+                j++;
             }
             position++;
         }

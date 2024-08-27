@@ -52,4 +52,11 @@ class MedianTwoSortedArraysTest {
         assertEquals(3.5, median);
     }
 
+    @Test
+    void test2(){
+        double median = extractor.findMedianSortedArrays(new int[]{2, 2, 4, 4}, new int[]{2, 2, 4, 4});
+
+        assertEquals(3.0, median);
+    }
+
 }
