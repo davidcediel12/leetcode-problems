@@ -65,7 +65,7 @@ public class MedianTwoSortedArrays {
             boolean moveSecondIndex = usedIndexesSecondArr.contains(j) && j + 1 < nums2.length;
             if (moveFirstIndex) {
                 i++;
-            } else if (moveSecondIndex){
+            } else if (moveSecondIndex) {
                 j++;
             }
             position++;
@@ -80,16 +80,16 @@ public class MedianTwoSortedArrays {
         if (finishedSecondArray) {
             currentNumber = nums1[i];
             usedIndexesFirstArr.add(i);
-            if (i + 1 == nums1.length) {
-                finishedFirstArray = true;
-            }
+
+            finishedFirstArray = i + 1 == nums1.length;
+
         } else if (finishedFirstArray) {
             currentNumber = nums2[j];
             usedIndexesSecondArr.add(j);
-            if (j + 1 == nums2.length) {
-                finishedSecondArray = true;
-            }
+
+            finishedSecondArray = j + 1 == nums2.length;
         } else {
+
             if (usedIndexesSecondArr.contains(j) ||
                     (nums1[i] <= nums2[j] && !usedIndexesFirstArr.contains(i))) {
 
