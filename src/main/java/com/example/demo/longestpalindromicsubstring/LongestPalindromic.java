@@ -20,13 +20,20 @@ public class LongestPalindromic {
         for (int i = 0; i < s.length(); i++) {
             char letter = s.charAt(i);
             if (indexLetters.containsKey(letter)) {
-                for (int index : indexLetters.get(letter)) {
+                boolean foundPalindrome = false;
+                int j = 0;
+                while (j < indexLetters.get(letter).size() && !foundPalindrome) {
+                    int index = indexLetters.get(letter).get(j);
                     String currentSubstring = s.substring(index, i + 1);
                     int subStringLength = 1 + i - index;
-                    if (subStringLength > palindrome.length() &&
-                            isPalindrome(s, index, i + 1)) {
+
+                    if(subStringLength <= palindrome.length()){
+                        foundPalindrome = true;
+                    } else if (isPalindrome(s, index, i + 1)) {
+                        foundPalindrome = true;
                         palindrome = currentSubstring;
                     }
+                    j += 1;
                 }
                 indexLetters.get(letter).add(i);
             } else {
