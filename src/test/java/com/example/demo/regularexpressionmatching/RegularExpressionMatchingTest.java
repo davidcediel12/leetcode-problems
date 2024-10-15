@@ -25,4 +25,20 @@ class RegularExpressionMatchingTest {
         assertTrue(regularExpressionMatching.isMatch("ab", ".*"));
     }
 
+    @Test
+    void shouldMatchIgnoringZeroExpressions(){
+        assertTrue(regularExpressionMatching.isMatch("aab", "c*a*b"));
+    }
+
+
+    @Test
+    void shouldMatchMississippi(){
+        assertTrue(regularExpressionMatching.isMatch("mississippi", "mis*is*ip*."));
+    }
+
+    @Test
+    void shouldNotMatchMississippi(){
+        assertFalse(regularExpressionMatching.isMatch("mississippi", "mis*is*p*."));
+    }
+
 }
