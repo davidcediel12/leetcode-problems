@@ -5,56 +5,42 @@ import java.util.List;
 
 public class RegularExpressionMatching {
 
-
     public boolean isMatch(String s, String p) {
+        return isMatch(s, obtainExpressions(p), 0, 0);
+    }
 
-        List<String> expressions = obtainExpressions(p);
+    public boolean isMatch(String s, List<String> expressions,
+                           int stringIndex, int expressionIndex) {
 
-        Integer currentIndex = 0;
+        String expression = expressions.get(expressionIndex);
 
-        int i = 0;
-        while (i < expressions.size()) {
-            String expressionRule = expressions.get(i);
-            String analyzed = s.substring(currentIndex);
-
-            if (isFreeCharacters(expressionRule)) {
-                char cardinality = expressionRule.charAt(1);
-
-
-                if (i + 1 < expressions.size()) {
-                    String nextExpression = expressions.get(i + 1);
-                    boolean isFreeExpression = isFreeCharacters(nextExpression);
-
-                    if (isFreeExpression && cardinality == '+') {
-                        currentIndex += 1;
-                    } else if (!isFreeExpression) {
-
-                        int reservedCharacters = cardinality == '+' ? 1 : 0;
-
-                        int nextExpressionIdx = analyzed.indexOf(nextExpression, reservedCharacters);
-
-                        if (nextExpressionIdx < 0) {
-                            return false;
-                        }
-                        currentIndex += reservedCharacters + nextExpressionIdx + nextExpression.length();
-                        i++;
-                    }
-                } else if (cardinality == '+') {
-                    return currentIndex < s.length();
-                } else {
-                    return true;
-                }
-            } else {
-                if (!analyzed.startsWith(expressionRule)) {
-                    return false;
-                }
-                currentIndex += expressionRule.length();
-            }
-            i++;
+        if (!matches(s.charAt(expressionIndex), expression.charAt(0))) {
+            return false;
         }
 
-        return currentIndex.equals(s.length());
+        boolean lastExpression = expressionIndex == expressions.size() - 1;
+        boolean lastWord = stringIndex == s.length() - 1;
+        boolean zeroOrMoreCharacters = isZeroOrMoreCharacters(expression);
+
+        if (lastExpression && lastWord) {
+            return true;
+        } else if (lastExpression && !zeroOrMoreCharacters) {
+            return false;
+        } else if (zeroOrMoreCharacters && !lastWord) {
+            if (lastExpression) {
+                return isMatch(s, expressions, stringIndex + 1, expressionIndex);
+            } else {
+                return isMatch(s, expressions, stringIndex + 1, expressionIndex)
+                        || isMatch(s, expressions, stringIndex + 1, expressionIndex + 1);
+            }
+        } else if (!zeroOrMoreCharacters) {
+            return isMatch(s, expressions, stringIndex + 1, expressionIndex + 1);
+        } else {
+            return false;
+        }
+
     }
+
 
     private static List<String> obtainExpressions(String p) {
         List<String> expressions = new ArrayList<>();
@@ -65,7 +51,9 @@ public class RegularExpressionMatching {
             char c = p.charAt(i);
 
             if (c == '.') {
-                expressions.add(expression.toString());
+                if (!expression.isEmpty()) {
+                    expressions.add(expression.toString());
+                }
                 expression = new StringBuilder();
                 expression.append(c);
             } else if (c == '*') {
@@ -82,10 +70,12 @@ public class RegularExpressionMatching {
         return expressions;
     }
 
+    private boolean matches(Character character, Character expectedCharacter) {
+        return expectedCharacter.equals('.') || character.equals(expectedCharacter);
+    }
 
 
-
-    private boolean isFreeCharacters(String expressionRule) {
-        return expressionRule.startsWith(".");
+    private boolean isZeroOrMoreCharacters(String expression) {
+        return expression.endsWith("*");
     }
 }

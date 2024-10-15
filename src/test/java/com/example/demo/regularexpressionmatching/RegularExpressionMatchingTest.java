@@ -20,4 +20,9 @@ class RegularExpressionMatchingTest {
         assertTrue(regularExpressionMatching.isMatch("aa", "a*"));
     }
 
+    @Test
+    void shouldMatchFreeChar(){
+        assertTrue(regularExpressionMatching.isMatch("ab", ".*"));
+    }
+
 }
