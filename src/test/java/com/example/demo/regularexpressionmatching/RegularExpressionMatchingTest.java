@@ -79,4 +79,15 @@ class RegularExpressionMatchingTest {
         assertTrue(regularExpressionMatching.isMatch("bbbba", ".*a*a"));
     }
 
+    @Test
+    void shouldNotMatch5() {
+        assertFalse(regularExpressionMatching.isMatch("aa", ".c*"));
+    }
+
+
+    @Test
+    void shouldMatch6() {
+        assertTrue(regularExpressionMatching.isMatch("aabcbcbcaccbcaabc", ".*a*aa*.*b*.c*.*a*"));
+    }
+
 }

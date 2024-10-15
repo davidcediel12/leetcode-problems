@@ -26,13 +26,11 @@ public class RegularExpressionMatching {
         boolean lastWord = stringIndex + expressionLength - 1 == s.length() - 1;
 
         if (!isMatch) {
-            if (!zeroOrMoreCharacters || expressionActivated) {
+            if (!zeroOrMoreCharacters || expressionActivated || lastExpression) {
                 return false;
-            } else if (!lastExpression) {
+            } else {
                 return isMatch(s, expressions, stringIndex,
                         expressionIndex + 1, false);
-            } else {
-                return lastWord;
             }
         }
 
@@ -49,7 +47,8 @@ public class RegularExpressionMatching {
                             expressionIndex, true);
                 } else {
                     if (lastWord) {
-                        return isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
+                        return isMatch(s, expressions, stringIndex, expressionIndex, false) ||
+                                isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
                     } else {
                         return isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
                                 isMatch(s, expressions, stringIndex + expressionLength,
