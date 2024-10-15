@@ -14,6 +14,11 @@ class RegularExpressionMatchingTest {
         assertFalse(regularExpressionMatching.isMatch("aa", "a"));
     }
 
+    @Test
+    void shouldMatchAa(){
+        assertTrue(regularExpressionMatching.isMatch("aa", "aa"));
+    }
+
 
     @Test
     void shouldMatch(){
@@ -39,6 +44,23 @@ class RegularExpressionMatchingTest {
     @Test
     void shouldNotMatchMississippi(){
         assertFalse(regularExpressionMatching.isMatch("mississippi", "mis*is*p*."));
+    }
+
+
+    @Test
+    void shouldNotMatch2(){
+        assertFalse(regularExpressionMatching.isMatch("aaa", "aaaa"));
+    }
+
+
+    @Test
+    void shouldMatchADotA(){
+        assertTrue(regularExpressionMatching.isMatch("aaa", "a.a"));
+    }
+
+    @Test
+    void shouldNotMatch3(){
+        assertFalse(regularExpressionMatching.isMatch("ab*a", "aaa"));
     }
 
 }

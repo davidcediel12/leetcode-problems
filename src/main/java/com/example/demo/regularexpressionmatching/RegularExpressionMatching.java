@@ -16,16 +16,19 @@ public class RegularExpressionMatching {
         boolean zeroOrMoreCharacters = isZeroOrMoreCharacters(expression);
         int expressionLength = getLength(expression, zeroOrMoreCharacters);
 
+        if (stringIndex + expressionLength > s.length()) {
+            return false;
+        }
         String characters = s.substring(stringIndex, stringIndex + expressionLength);
         boolean isMatch = matches(characters, expression);
         boolean lastExpression = expressionIndex == expressions.size() - 1;
-        boolean lastWord = stringIndex == s.length() - 1;
+        boolean lastWord = stringIndex + expressionLength - 1 == s.length() - 1;
 
         if (!isMatch) {
             if (!zeroOrMoreCharacters || expressionActivated) {
                 return false;
             } else if (!lastExpression && !lastWord) {
-                return isMatch(s, expressions, stringIndex + 1,
+                return isMatch(s, expressions, stringIndex,
                         expressionIndex + 1, false);
             } else {
                 return false;
@@ -92,6 +95,10 @@ public class RegularExpressionMatching {
                     expressions.add(expression.substring(lastWordIdx, expression.length()) + "*");
                 }
                 expression = new StringBuilder();
+            } else if (expression.toString().equals(".")) {
+                expressions.add(expression.toString());
+                expression = new StringBuilder();
+                expression.append(c);
             } else {
                 expression.append(c);
             }
