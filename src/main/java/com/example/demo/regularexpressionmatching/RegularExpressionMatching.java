@@ -27,7 +27,7 @@ public class RegularExpressionMatching {
         if (!isMatch) {
             if (!zeroOrMoreCharacters || expressionActivated) {
                 return false;
-            } else if (!lastExpression && !lastWord) {
+            } else if (!lastExpression) {
                 return isMatch(s, expressions, stringIndex,
                         expressionIndex + 1, false);
             } else {

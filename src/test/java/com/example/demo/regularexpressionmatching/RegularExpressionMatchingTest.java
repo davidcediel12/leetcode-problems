@@ -2,7 +2,8 @@ package com.example.demo.regularexpressionmatching;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegularExpressionMatchingTest {
 
@@ -10,57 +11,62 @@ class RegularExpressionMatchingTest {
 
 
     @Test
-    void shouldNotMatch(){
+    void shouldNotMatch() {
         assertFalse(regularExpressionMatching.isMatch("aa", "a"));
     }
 
     @Test
-    void shouldMatchAa(){
+    void shouldMatchAa() {
         assertTrue(regularExpressionMatching.isMatch("aa", "aa"));
     }
 
 
     @Test
-    void shouldMatch(){
+    void shouldMatch() {
         assertTrue(regularExpressionMatching.isMatch("aa", "a*"));
     }
 
     @Test
-    void shouldMatchFreeChar(){
+    void shouldMatchFreeChar() {
         assertTrue(regularExpressionMatching.isMatch("ab", ".*"));
     }
 
     @Test
-    void shouldMatchIgnoringZeroExpressions(){
+    void shouldMatchIgnoringZeroExpressions() {
         assertTrue(regularExpressionMatching.isMatch("aab", "c*a*b"));
     }
 
 
     @Test
-    void shouldMatchMississippi(){
+    void shouldMatchMississippi() {
         assertTrue(regularExpressionMatching.isMatch("mississippi", "mis*is*ip*."));
     }
 
     @Test
-    void shouldNotMatchMississippi(){
+    void shouldNotMatchMississippi() {
         assertFalse(regularExpressionMatching.isMatch("mississippi", "mis*is*p*."));
     }
 
 
     @Test
-    void shouldNotMatch2(){
+    void shouldNotMatch2() {
         assertFalse(regularExpressionMatching.isMatch("aaa", "aaaa"));
     }
 
 
     @Test
-    void shouldMatchADotA(){
+    void shouldMatchADotA() {
         assertTrue(regularExpressionMatching.isMatch("aaa", "a.a"));
     }
 
     @Test
-    void shouldNotMatch3(){
-        assertFalse(regularExpressionMatching.isMatch("ab*a", "aaa"));
+    void shouldNotMatch3() {
+        assertFalse(regularExpressionMatching.isMatch("aaa", "ab*a"));
+    }
+
+    @Test
+    void shouldMatch3() {
+        assertTrue(regularExpressionMatching.isMatch("aaa", "ab*ac*a"));
     }
 
 }
