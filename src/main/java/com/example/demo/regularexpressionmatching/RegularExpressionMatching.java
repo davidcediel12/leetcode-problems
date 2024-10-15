@@ -43,21 +43,24 @@ public class RegularExpressionMatching {
             return false;
         } else {
 
-            if (zeroOrMoreCharacters && !lastWord) {
+            if (zeroOrMoreCharacters) {
                 if (lastExpression) {
                     return isMatch(s, expressions, stringIndex + expressionLength,
                             expressionIndex, true);
                 } else {
-                    return isMatch(s, expressions, stringIndex + expressionLength,
-                            expressionIndex, true)
-                            || isMatch(s, expressions, stringIndex + expressionLength,
-                            expressionIndex + 1, false);
+                    if (lastWord) {
+                        return isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
+                    } else {
+                        return isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
+                                isMatch(s, expressions, stringIndex + expressionLength,
+                                        expressionIndex, true)
+                                || isMatch(s, expressions, stringIndex + expressionLength,
+                                expressionIndex + 1, false);
+                    }
                 }
-            } else if (!zeroOrMoreCharacters) {
+            } else {
                 return isMatch(s, expressions, stringIndex + expressionLength,
                         expressionIndex + 1, false);
-            } else {
-                return false;
             }
         }
 
