@@ -47,14 +47,15 @@ public class RegularExpressionMatching {
                             expressionIndex, true);
                 } else {
                     if (lastWord) {
-                        return isMatch(s, expressions, stringIndex, expressionIndex, false) ||
+                        return expressions.subList(expressionIndex, expressions.size())
+                                .stream().allMatch(this::isZeroOrMoreCharacters) ||
                                 isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
                     } else {
                         return isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
                                 isMatch(s, expressions, stringIndex + expressionLength,
-                                        expressionIndex, true)
-                                || isMatch(s, expressions, stringIndex + expressionLength,
-                                expressionIndex + 1, false);
+                                        expressionIndex, true) ||
+                                isMatch(s, expressions, stringIndex + expressionLength,
+                                        expressionIndex + 1, false);
                     }
                 }
             } else {
