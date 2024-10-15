@@ -15,13 +15,14 @@ public class RegularExpressionMatching {
         String expression = expressions.get(expressionIndex);
         boolean zeroOrMoreCharacters = isZeroOrMoreCharacters(expression);
         int expressionLength = getLength(expression, zeroOrMoreCharacters);
+        boolean lastExpression = expressionIndex == expressions.size() - 1;
+
 
         if (stringIndex + expressionLength > s.length()) {
-            return false;
+            return lastExpression && zeroOrMoreCharacters && !expressionActivated;
         }
         String characters = s.substring(stringIndex, stringIndex + expressionLength);
         boolean isMatch = matches(characters, expression);
-        boolean lastExpression = expressionIndex == expressions.size() - 1;
         boolean lastWord = stringIndex + expressionLength - 1 == s.length() - 1;
 
         if (!isMatch) {
@@ -31,7 +32,7 @@ public class RegularExpressionMatching {
                 return isMatch(s, expressions, stringIndex,
                         expressionIndex + 1, false);
             } else {
-                return false;
+                return lastWord;
             }
         }
 

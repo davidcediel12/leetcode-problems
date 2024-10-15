@@ -69,4 +69,9 @@ class RegularExpressionMatchingTest {
         assertTrue(regularExpressionMatching.isMatch("aaa", "ab*ac*a"));
     }
 
+    @Test
+    void shouldMatch4() {
+        assertTrue(regularExpressionMatching.isMatch("a", "ab*"));
+    }
+
 }
