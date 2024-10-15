@@ -41,14 +41,15 @@ public class RegularExpressionMatching {
             return false;
         } else {
 
+            boolean allRemainingExpressionsAreOptional = expressions.subList(expressionIndex + 1, expressions.size())
+                    .stream().allMatch(this::isZeroOrMoreCharacters);
             if (zeroOrMoreCharacters) {
                 if (lastExpression) {
                     return isMatch(s, expressions, stringIndex + expressionLength,
                             expressionIndex, true);
                 } else {
                     if (lastWord) {
-                        return expressions.subList(expressionIndex, expressions.size())
-                                .stream().allMatch(this::isZeroOrMoreCharacters) ||
+                        return allRemainingExpressionsAreOptional ||
                                 isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
                     } else {
                         return isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
@@ -59,7 +60,8 @@ public class RegularExpressionMatching {
                     }
                 }
             } else {
-                return isMatch(s, expressions, stringIndex + expressionLength,
+                return (lastWord && allRemainingExpressionsAreOptional) ||
+                        isMatch(s, expressions, stringIndex + expressionLength,
                         expressionIndex + 1, false);
             }
         }
