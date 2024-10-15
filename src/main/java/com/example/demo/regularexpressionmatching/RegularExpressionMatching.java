@@ -8,28 +8,7 @@ public class RegularExpressionMatching {
 
     public boolean isMatch(String s, String p) {
 
-        List<String> expressions = new ArrayList<>();
-
-        StringBuilder expression = new StringBuilder();
-
-        for (int i = 0; i < p.length(); i++) {
-            char c = p.charAt(i);
-
-            if (c == '.') {
-                expressions.add(expression.toString());
-                expression = new StringBuilder();
-                expression.append(c);
-            } else if (c == '+') {
-                expression.append(c);
-                expressions.add(expression.toString());
-                expression = new StringBuilder();
-            } else {
-                expression.append(c);
-            }
-        }
-        if (!expression.isEmpty()) {
-            expressions.add(expression.toString());
-        }
+        List<String> expressions = obtainExpressions(p);
 
         Integer currentIndex = 0;
 
@@ -76,6 +55,35 @@ public class RegularExpressionMatching {
 
         return currentIndex.equals(s.length());
     }
+
+    private static List<String> obtainExpressions(String p) {
+        List<String> expressions = new ArrayList<>();
+
+        StringBuilder expression = new StringBuilder();
+
+        for (int i = 0; i < p.length(); i++) {
+            char c = p.charAt(i);
+
+            if (c == '.') {
+                expressions.add(expression.toString());
+                expression = new StringBuilder();
+                expression.append(c);
+            } else if (c == '*') {
+                expression.append(c);
+                expressions.add(expression.toString());
+                expression = new StringBuilder();
+            } else {
+                expression.append(c);
+            }
+        }
+        if (!expression.isEmpty()) {
+            expressions.add(expression.toString());
+        }
+        return expressions;
+    }
+
+
+
 
     private boolean isFreeCharacters(String expressionRule) {
         return expressionRule.startsWith(".");
