@@ -6,16 +6,18 @@ import java.util.List;
 public class RegularExpressionMatching {
 
     Boolean[][] results;
+    String s;
+    List<String> expressions;
 
     public boolean isMatch(String s, String p) {
-        List<String> expressions = obtainExpressions(p);
+        obtainExpressions(p);
         results = new Boolean[s.length()][expressions.size()];
+        this.s = s;
 
-        return isMatch(s, expressions, 0, 0, false);
+        return isMatch(0, 0, false);
     }
 
-    public boolean isMatch(String s, List<String> expressions,
-                           int stringIndex, int expressionIndex, boolean expressionActivated) {
+    public boolean isMatch(int stringIndex, int expressionIndex, boolean expressionActivated) {
 
 
         String expression = expressions.get(expressionIndex);
@@ -41,12 +43,16 @@ public class RegularExpressionMatching {
                 results[stringIndex][expressionIndex] = false;
                 return false;
             } else {
-                return isMatch(s, expressions, stringIndex,
-                        expressionIndex + 1, false);
+                return isMatch(stringIndex, expressionIndex + 1, false);
             }
         }
 
+        return handleExpressionMatch(stringIndex, expressionIndex, lastExpression, lastWord, zeroOrMoreCharacters, expressionLength);
 
+    }
+
+    private boolean handleExpressionMatch(int stringIndex, int expressionIndex, boolean lastExpression,
+                                          boolean lastWord, boolean zeroOrMoreCharacters, int expressionLength) {
         if (lastExpression && lastWord) {
             results[stringIndex][expressionIndex] = true;
             return true;
@@ -54,35 +60,39 @@ public class RegularExpressionMatching {
             results[stringIndex][expressionIndex] = false;
             return false;
         } else {
-
             boolean allRemainingExpressionsAreOptional = expressions.subList(expressionIndex + 1, expressions.size())
                     .stream().allMatch(this::isZeroOrMoreCharacters);
+
             if (zeroOrMoreCharacters) {
-                if (lastExpression) {
-                    return isMatch(s, expressions, stringIndex + expressionLength,
-                            expressionIndex, true);
-                } else {
-                    if (lastWord) {
-                        results[stringIndex][expressionIndex] = allRemainingExpressionsAreOptional ||
-                                isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
-                        return results[stringIndex][expressionIndex];
-                    } else {
-                        results[stringIndex][expressionIndex] = isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
-                                isMatch(s, expressions, stringIndex + expressionLength,
-                                        expressionIndex, true) ||
-                                isMatch(s, expressions, stringIndex + expressionLength,
-                                        expressionIndex + 1, false);
-                        return results[stringIndex][expressionIndex];
-                    }
-                }
+                manageMatchWithZeroOrMoreCharactersExpression(
+                        stringIndex, expressionIndex,
+                        lastExpression, expressionLength, lastWord, allRemainingExpressionsAreOptional);
             } else {
                 results[stringIndex][expressionIndex] = (lastWord && allRemainingExpressionsAreOptional) ||
-                        isMatch(s, expressions, stringIndex + expressionLength,
-                                expressionIndex + 1, false);
-                return results[stringIndex][expressionIndex];
+                        isMatch(stringIndex + expressionLength, expressionIndex + 1, false);
+            }
+            return results[stringIndex][expressionIndex];
+        }
+    }
+
+    private void manageMatchWithZeroOrMoreCharactersExpression(int stringIndex,
+                                                               int expressionIndex, boolean lastExpression,
+                                                               int expressionLength, boolean lastWord,
+                                                               boolean allRemainingExpressionsAreOptional) {
+        if (lastExpression) {
+            results[stringIndex][expressionIndex] = isMatch(stringIndex + expressionLength,
+                    expressionIndex, true);
+        } else {
+            if (lastWord) {
+                results[stringIndex][expressionIndex] = allRemainingExpressionsAreOptional ||
+                        isMatch(stringIndex, expressionIndex + 1, false);
+            } else {
+                results[stringIndex][expressionIndex] =
+                        isMatch(stringIndex, expressionIndex + 1, false) ||
+                                isMatch(stringIndex + expressionLength, expressionIndex, true) ||
+                                isMatch(stringIndex + expressionLength, expressionIndex + 1, false);
             }
         }
-
     }
 
     private static int getLength(String expression, boolean zeroOrMoreCharacters) {
@@ -94,8 +104,8 @@ public class RegularExpressionMatching {
     }
 
 
-    private static List<String> obtainExpressions(String p) {
-        List<String> expressions = new ArrayList<>();
+    private void obtainExpressions(String p) {
+        expressions = new ArrayList<>();
 
         StringBuilder expression = new StringBuilder();
 
@@ -129,7 +139,6 @@ public class RegularExpressionMatching {
         if (!expression.isEmpty()) {
             expressions.add(expression.toString());
         }
-        return expressions;
     }
 
     private boolean matches(String characters, String expression) {
