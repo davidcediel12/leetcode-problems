@@ -43,7 +43,8 @@ public class RegularExpressionMatching {
                 results[stringIndex][expressionIndex] = false;
                 return false;
             } else {
-                return isMatch(stringIndex, expressionIndex + 1, false);
+                results[stringIndex][expressionIndex] = isMatch(stringIndex, expressionIndex + 1, false);
+                return results[stringIndex][expressionIndex];
             }
         }
 
