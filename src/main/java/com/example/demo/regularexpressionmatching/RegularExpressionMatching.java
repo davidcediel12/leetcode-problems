@@ -5,12 +5,18 @@ import java.util.List;
 
 public class RegularExpressionMatching {
 
+    Boolean[][] results;
+
     public boolean isMatch(String s, String p) {
-        return isMatch(s, obtainExpressions(p), 0, 0, false);
+        List<String> expressions = obtainExpressions(p);
+        results = new Boolean[s.length()][expressions.size()];
+
+        return isMatch(s, expressions, 0, 0, false);
     }
 
     public boolean isMatch(String s, List<String> expressions,
                            int stringIndex, int expressionIndex, boolean expressionActivated) {
+
 
         String expression = expressions.get(expressionIndex);
         boolean zeroOrMoreCharacters = isZeroOrMoreCharacters(expression);
@@ -21,12 +27,18 @@ public class RegularExpressionMatching {
         if (stringIndex + expressionLength > s.length()) {
             return lastExpression && zeroOrMoreCharacters && !expressionActivated;
         }
+
+        if (results[stringIndex][expressionIndex] != null) {
+            return results[stringIndex][expressionIndex];
+        }
+
         String characters = s.substring(stringIndex, stringIndex + expressionLength);
         boolean isMatch = matches(characters, expression);
         boolean lastWord = stringIndex + expressionLength - 1 == s.length() - 1;
 
         if (!isMatch) {
             if (!zeroOrMoreCharacters || expressionActivated || lastExpression) {
+                results[stringIndex][expressionIndex] = false;
                 return false;
             } else {
                 return isMatch(s, expressions, stringIndex,
@@ -36,8 +48,10 @@ public class RegularExpressionMatching {
 
 
         if (lastExpression && lastWord) {
+            results[stringIndex][expressionIndex] = true;
             return true;
         } else if (lastExpression && !zeroOrMoreCharacters) {
+            results[stringIndex][expressionIndex] = false;
             return false;
         } else {
 
@@ -49,20 +63,23 @@ public class RegularExpressionMatching {
                             expressionIndex, true);
                 } else {
                     if (lastWord) {
-                        return allRemainingExpressionsAreOptional ||
+                        results[stringIndex][expressionIndex] = allRemainingExpressionsAreOptional ||
                                 isMatch(s, expressions, stringIndex, expressionIndex + 1, false);
+                        return results[stringIndex][expressionIndex];
                     } else {
-                        return isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
+                        results[stringIndex][expressionIndex] = isMatch(s, expressions, stringIndex, expressionIndex + 1, false) ||
                                 isMatch(s, expressions, stringIndex + expressionLength,
                                         expressionIndex, true) ||
                                 isMatch(s, expressions, stringIndex + expressionLength,
                                         expressionIndex + 1, false);
+                        return results[stringIndex][expressionIndex];
                     }
                 }
             } else {
-                return (lastWord && allRemainingExpressionsAreOptional) ||
+                results[stringIndex][expressionIndex] = (lastWord && allRemainingExpressionsAreOptional) ||
                         isMatch(s, expressions, stringIndex + expressionLength,
-                        expressionIndex + 1, false);
+                                expressionIndex + 1, false);
+                return results[stringIndex][expressionIndex];
             }
         }
 
