@@ -7,7 +7,7 @@ import java.util.List;
 
 public class LongestCommonPrefix {
 
-    public String longestCommonPrefix2(String[] strs) {
+    public String longestCommonPrefix1(String[] strs) {
 
         String minWord = Arrays.stream(strs)
                 .min(Comparator.comparingInt(String::length))
@@ -37,7 +37,7 @@ public class LongestCommonPrefix {
     }
 
 
-    public String longestCommonPrefix(String[] strs) {
+    public String longestCommonPrefix2(String[] strs) {
 
         List<String> stringList = new ArrayList<>(Arrays.stream(strs).toList());
 
@@ -54,15 +54,15 @@ public class LongestCommonPrefix {
             boolean isMatch = true;
             String prefix = "";
             String currentWord = stringList.get(i);
-            while (j < firstWord.length()  && j < currentWord.length() && isMatch) {
+            while (j < firstWord.length() && j < currentWord.length() && isMatch) {
                 if (firstWord.charAt(j) != currentWord.charAt(j)) {
                     prefix = firstWord.substring(0, j);
                     isMatch = false;
                 }
                 j++;
             }
-            if(isMatch){
-                if(firstWord.length() < currentWord.length()){
+            if (isMatch) {
+                if (firstWord.length() < currentWord.length()) {
                     prefix = firstWord;
                 } else {
                     prefix = currentWord;
@@ -76,5 +76,25 @@ public class LongestCommonPrefix {
             i++;
         }
         return bestPrefix;
+    }
+
+
+    public String longestCommonPrefix(String[] strs) {
+
+        List<String> stringList = Arrays.stream(strs).sorted().toList();
+
+        String firstWord = stringList.getFirst();
+        String lastWord = stringList.getLast();
+
+        int i = 0;
+
+        while (i < firstWord.length() && i < lastWord.length()) {
+            if (firstWord.charAt(i) != lastWord.charAt(i)) {
+                return firstWord.substring(0, i);
+            }
+            i ++;
+        }
+
+        return firstWord;
     }
 }
