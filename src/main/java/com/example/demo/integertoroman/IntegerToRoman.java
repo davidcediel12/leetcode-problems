@@ -1,66 +1,36 @@
 package com.example.demo.integertoroman;
 
+import java.util.List;
+
 public class IntegerToRoman {
+
+    record Value(Integer number, String roman) {
+    }
+
     public String intToRoman(int num) {
 
         StringBuilder roman = new StringBuilder();
 
-        while (num > 0) {
-            int digit = Integer.parseInt(String.valueOf(num).substring(0, 1));
-            boolean subtractiveForm = digit == 9 || digit == 4;
+        List<Value> values = List.of(
+                new Value(1000, "M"),
+                new Value(900, "CM"),
+                new Value(500, "D"),
+                new Value(400, "CD"),
+                new Value(100, "C"),
+                new Value(90, "XC"),
+                new Value(50, "L"),
+                new Value(40, "XL"),
+                new Value(10, "X"),
+                new Value(9, "IX"),
+                new Value(5, "V"),
+                new Value(4, "IV"),
+                new Value(1, "I")
+        );
 
-            if (num >= 1000) {
-                roman.append("M".repeat(digit));
-                num -= (1000 * digit);
-            } else if (num >= 500) {
-                if (subtractiveForm) {
-                    roman.append("CM");
-                    num -= 900;
-                } else {
-                    roman.append("D");
-                    num -= 500;
-                }
-
-            } else if (num >= 100) {
-                if (subtractiveForm) {
-                    roman.append("CD");
-                    num -= 400;
-                } else {
-                    roman.append("C".repeat(digit));
-                    num -= (100 * digit);
-                }
-            } else if (num >= 50) {
-                if (subtractiveForm) {
-                    roman.append("XC");
-                    num -= 90;
-                } else {
-                    roman.append("L");
-                    num -= 50;
-                }
-            } else if (num >= 10) {
-                if (subtractiveForm) {
-                    roman.append("XL");
-                    num -= 40;
-                } else {
-                    roman.append("X".repeat(digit));
-                    num -= (10 * digit);
-                }
-            } else if (num >= 5) {
-                if (subtractiveForm) {
-                    roman.append("IX");
-                    num -= 9;
-                } else {
-                    roman.append("V");
-                    num -= 5;
-                }
-            } else {
-                if (subtractiveForm) {
-                    roman.append("IV");
-                    num -= 4;
-                } else {
-                    roman.append("I".repeat(num));
-                    num = 0;
-                }
+        for(Value value : values) {
+            while (num >= value.number()) {
+                roman.append(value.roman());
+                num -= value.number();
             }
         }
 
