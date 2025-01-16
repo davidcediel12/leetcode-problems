@@ -48,7 +48,7 @@ public class LongestCommonPrefix {
         String bestPrefix = firstWord;
 
         int i = 0;
-        while (i < stringList.size()) {
+        while (i < stringList.size() && !bestPrefix.isEmpty()) {
 
             int j = 0;
             boolean isMatch = true;
