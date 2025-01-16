@@ -41,14 +41,11 @@ public class LongestCommonPrefix {
 
         List<String> stringList = new ArrayList<>(Arrays.stream(strs).toList());
 
-        String minWord = Arrays.stream(strs)
-                .min(Comparator.comparingInt(String::length))
-                .orElse("");
+        String firstWord = stringList.getFirst();
 
+        stringList.removeFirst();
 
-        stringList.remove(minWord);
-
-        String bestPrefix = minWord;
+        String bestPrefix = firstWord;
 
         int i = 0;
         while (i < stringList.size()) {
@@ -56,15 +53,20 @@ public class LongestCommonPrefix {
             int j = 0;
             boolean isMatch = true;
             String prefix = "";
-            while (j < minWord.length() && isMatch) {
-                if (minWord.charAt(j) != stringList.get(i).charAt(j)) {
-                    prefix = minWord.substring(0, j);
+            String currentWord = stringList.get(i);
+            while (j < firstWord.length()  && j < currentWord.length() && isMatch) {
+                if (firstWord.charAt(j) != currentWord.charAt(j)) {
+                    prefix = firstWord.substring(0, j);
                     isMatch = false;
                 }
                 j++;
             }
             if(isMatch){
-                prefix = minWord;
+                if(firstWord.length() < currentWord.length()){
+                    prefix = firstWord;
+                } else {
+                    prefix = currentWord;
+                }
             }
 
             if (prefix.length() < bestPrefix.length()) {
