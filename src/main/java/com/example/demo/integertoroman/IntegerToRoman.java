@@ -1,41 +1,50 @@
 package com.example.demo.integertoroman;
 
-import java.util.List;
-
 public class IntegerToRoman {
 
-    record Value(Integer number, String roman) {
-    }
 
     public String intToRoman(int num) {
 
         StringBuilder roman = new StringBuilder();
 
-        List<Value> values = List.of(
-                new Value(1000, "M"),
-                new Value(900, "CM"),
-                new Value(500, "D"),
-                new Value(400, "CD"),
-                new Value(100, "C"),
-                new Value(90, "XC"),
-                new Value(50, "L"),
-                new Value(40, "XL"),
-                new Value(10, "X"),
-                new Value(9, "IX"),
-                new Value(5, "V"),
-                new Value(4, "IV"),
-                new Value(1, "I")
-        );
 
-        for(Value value : values) {
-            while (num >= value.number()) {
+        while (num > 0) {
+            Value value = obtainValue(num);
+            if (value.canReduceMultiple()) {
+                int digit = Integer.parseInt(String.valueOf(num).substring(0, 1));
+
+                roman.append(value.roman().repeat(digit));
+                num -= (value.number() * digit);
+            } else {
                 roman.append(value.roman());
                 num -= value.number();
             }
+
         }
 
         return roman.toString();
 
+    }
+
+
+    private Value obtainValue(int num) {
+
+        if (num >= 1000) return new Value(1000, "M", true);
+        if (num >= 900) return new Value(900, "CM", false);
+        if (num >= 500) return new Value(500, "D", false);
+        if (num >= 400) return new Value(400, "CD", false);
+        if (num >= 100) return new Value(100, "C", true);
+        if (num >= 90) return new Value(90, "XC", false);
+        if (num >= 50) return new Value(50, "L", false);
+        if (num >= 40) return new Value(40, "XL", false);
+        if (num >= 10) return new Value(10, "X", true);
+        if (num >= 9) return new Value(9, "IX", false);
+        if (num >= 5) return new Value(5, "V", false);
+        if (num >= 4) return new Value(4, "IV", false);
+        return new Value(1, "I", true);
+    }
+
+    record Value(Integer number, String roman, boolean canReduceMultiple) {
     }
 
 }
