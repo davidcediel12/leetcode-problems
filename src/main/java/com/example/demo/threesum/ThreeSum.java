@@ -27,7 +27,7 @@ public class ThreeSum {
         }
 
         Set<List<Integer>> triplets = new HashSet<>();
-        Set<List<Integer>> orderedTriplets = new HashSet<>();
+        Set<Set<Integer>> tripletsSet = new HashSet<>();
 
         for (int i = 0; i < reducedNumbers.size(); i++) {
             int t1 = reducedNumbers.get(i);
@@ -36,15 +36,16 @@ public class ThreeSum {
                 int t3 = -t1 - t2;
 
                 List<Integer> possibleTriplet = List.of(t1, t2, t3);
-                List<Integer> orderedPossibleTriplet = possibleTriplet.stream().sorted().toList();
+
+                Set<Integer> possibleTripletSet = new HashSet<>(possibleTriplet);
 
 
                 if (j + 1 < reducedNumbers.size() &&
-                        !orderedTriplets.contains(orderedPossibleTriplet) &&
+                        !tripletsSet.contains(possibleTripletSet) &&
                         existsT3(t3, t1, t2, uniqueNumbers)) {
 
                     triplets.add(possibleTriplet);
-                    orderedTriplets.add(orderedPossibleTriplet);
+                    tripletsSet.add(possibleTripletSet);
                 }
 
             }
