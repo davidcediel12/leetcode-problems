@@ -29,8 +29,15 @@ public class ThreeSum {
         Set<List<Integer>> triplets = new HashSet<>();
         Set<Set<Integer>> tripletsSet = new HashSet<>();
 
+        Set<Integer> alreadyInTriplet = new HashSet<>();
+
         for (int i = 0; i < reducedNumbers.size(); i++) {
             int t1 = reducedNumbers.get(i);
+
+            if (alreadyInTriplet.contains(t1)) {
+                continue;
+            }
+
             for (int j = i + 1; j < reducedNumbers.size(); j++) {
                 int t2 = reducedNumbers.get(j);
                 int t3 = -t1 - t2;
@@ -46,6 +53,8 @@ public class ThreeSum {
 
                     triplets.add(possibleTriplet);
                     tripletsSet.add(possibleTripletSet);
+
+                    alreadyInTriplet.add(t1);
                 }
 
             }
