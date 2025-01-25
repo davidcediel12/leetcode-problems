@@ -105,9 +105,4 @@ class ThreeSumTest {
                 assertTrue(expectedTriplets.stream()
                         .anyMatch(expectedTriplet -> expectedTriplet.containsAll(returnedTriplet))));
     }
-
-
-
-
-
 }
