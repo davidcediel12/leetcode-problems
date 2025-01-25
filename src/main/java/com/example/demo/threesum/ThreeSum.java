@@ -6,7 +6,48 @@ import java.util.stream.Stream;
 
 public class ThreeSum {
 
-    public List<List<Integer>> threeSum3(int[] nums) {
+    public List<List<Integer>> threeSum(int[] nums) {
+
+        List<Integer> numbers = Arrays.stream(nums).sorted().boxed().toList();
+        Set<List<Integer>> triplets = new HashSet<>();
+        Set<Integer> alreadyProcessed = new HashSet<>();
+
+        for (int i = 0; i < numbers.size(); i++) {
+            int j = i + 1;
+            int k = numbers.size() - 1;
+
+            if (alreadyProcessed.contains(numbers.get(i))) {
+                continue;
+            }
+
+            while (j < numbers.size() && j < k) {
+
+                int total = numbers.get(i) + numbers.get(j) + numbers.get(k);
+
+                if (total == 0) {
+
+                    triplets.add(List.of(numbers.get(i), numbers.get(j), numbers.get(k)));
+                    j++;
+                    k--;
+                } else if (total < 0) {
+                    j++;
+                } else {
+                    k--;
+                }
+            }
+            alreadyProcessed.add(numbers.get(i));
+        }
+
+        return triplets.stream().toList();
+    }
+
+
+    /**
+     *
+     * @deprecated Non-optimal version, but it works
+     */
+    @Deprecated(since = "The optimized version exists, which is implemented above")
+    public List<List<Integer>> threeSumNonOptimal(int[] nums) {
 
 
         Set<Integer> numberSet = Arrays.stream(nums).boxed().collect(Collectors.toSet());
@@ -98,39 +139,4 @@ public class ThreeSum {
         }) >= times;
     }
 
-
-    public List<List<Integer>> threeSum(int[] nums) {
-
-        List<Integer> numbers = Arrays.stream(nums).sorted().boxed().toList();
-        Set<List<Integer>> triplets = new HashSet<>();
-        Set<Integer> alreadyProcessed = new HashSet<>();
-
-        for (int i = 0; i < numbers.size(); i++) {
-            int j = i + 1;
-            int k = numbers.size() - 1;
-
-            if (alreadyProcessed.contains(numbers.get(i))) {
-                continue;
-            }
-
-            while (j < numbers.size() && j < k) {
-
-                int total = numbers.get(i) + numbers.get(j) + numbers.get(k);
-
-                if (total == 0) {
-
-                    triplets.add(List.of(numbers.get(i), numbers.get(j), numbers.get(k)));
-                    j++;
-                    k--;
-                } else if (total < 0) {
-                    j++;
-                } else {
-                    k--;
-                }
-            }
-            alreadyProcessed.add(numbers.get(i));
-        }
-
-        return triplets.stream().toList();
-    }
 }
