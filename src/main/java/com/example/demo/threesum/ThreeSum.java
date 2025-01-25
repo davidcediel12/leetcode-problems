@@ -1,12 +1,32 @@
 package com.example.demo.threesum;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ThreeSum {
 
     public List<List<Integer>> threeSum(int[] nums) {
 
+
+        Set<Integer> numberSet = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+
+        if (numberSet.size() == 1 && numberSet.contains(0)) {
+            return List.of(List.of(0, 0, 0));
+        }
+        if (numberSet.size() == 2 && numberSet.stream().reduce(0, Integer::sum) == 0) {
+            return Collections.emptyList();
+        }
+        if (numberSet.size() == 3 && numberSet.stream().reduce(0, Integer::sum) == 0) {
+
+            if(numberSet.contains(0) && existsMoreThan(nums, 3)){
+                return List.of(numberSet.stream().toList(), List.of(0, 0, 0));
+            }
+            return List.of(numberSet.stream().toList());
+        }
+
         List<Integer> numbers = Arrays.stream(nums).boxed().toList();
+
         List<Integer> reducedNumbers = new ArrayList<>();
 
         Map<Integer, Integer> uniqueNumbers = new HashMap<>();
@@ -27,7 +47,6 @@ public class ThreeSum {
         }
 
         Set<List<Integer>> triplets = new HashSet<>();
-        Set<Set<Integer>> tripletsSet = new HashSet<>();
 
         Set<Integer> alreadyInTriplet = new HashSet<>();
 
@@ -42,17 +61,13 @@ public class ThreeSum {
                 int t2 = reducedNumbers.get(j);
                 int t3 = -t1 - t2;
 
-                List<Integer> possibleTriplet = List.of(t1, t2, t3);
-
-                Set<Integer> possibleTripletSet = new HashSet<>(possibleTriplet);
-
+                List<Integer> possibleTriplet = Stream.of(t1, t2, t3).sorted().toList();
 
                 if (j + 1 < reducedNumbers.size() &&
-                        !tripletsSet.contains(possibleTripletSet) &&
+                        !triplets.contains(possibleTriplet) &&
                         existsT3(t3, t1, t2, uniqueNumbers)) {
 
                     triplets.add(possibleTriplet);
-                    tripletsSet.add(possibleTripletSet);
 
                     alreadyInTriplet.add(t1);
                 }
@@ -62,15 +77,24 @@ public class ThreeSum {
         return new ArrayList<>(triplets);
     }
 
+    private static boolean existsMoreThan(int[] nums, int times) {
+        return Arrays.stream(nums).reduce(0, (a, x) -> {
+            if (x == 0) {
+                return a + 1;
+            }
+            return a;
+        }) >= times;
+    }
+
     private static boolean existsT3(int t3, int t1, int t2, Map<Integer, Integer> uniqueNumbers) {
-        boolean existsT3;
         if (t3 == t1 && t3 == t2) {
-            existsT3 = uniqueNumbers.get(t3) > 2;
-        } else if (t3 == t1 || t3 == t2) {
-            existsT3 = uniqueNumbers.get(t3) > 1;
-        } else {
-            existsT3 = uniqueNumbers.containsKey(t3);
+            return uniqueNumbers.get(t3) > 2;
         }
-        return existsT3;
+
+        if (t3 == t1 || t3 == t2) {
+            return uniqueNumbers.get(t3) > 1;
+        }
+
+        return uniqueNumbers.containsKey(t3);
     }
 }
