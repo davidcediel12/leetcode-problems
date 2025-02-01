@@ -18,9 +18,10 @@ public class FourSum {
             int leftChild = left + 1;
             int rightChild = right - 1;
 
+            int sum = Integer.MAX_VALUE;
             while (leftChild < rightChild) {
 
-                int sum = numbers.get(left) + numbers.get(leftChild) + numbers.get(rightChild) + numbers.get(right);
+                sum = numbers.get(left) + numbers.get(leftChild) + numbers.get(rightChild) + numbers.get(right);
 
                 if (sum > target) {
                     rightChild--;
@@ -33,8 +34,15 @@ public class FourSum {
                     rightChild--;
                 }
             }
-            left++;
-            right--;
+
+            if (sum > target) {
+                right--;
+            } else if (sum < target) {
+                left++;
+            } else {
+                left++;
+                right--;
+            }
         }
         return quadruplets;
 
