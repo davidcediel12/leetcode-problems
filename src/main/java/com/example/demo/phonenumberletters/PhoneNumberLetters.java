@@ -1,6 +1,9 @@
 package com.example.demo.phonenumberletters;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class PhoneNumberLetters {
 
@@ -15,16 +18,18 @@ public class PhoneNumberLetters {
             '9', List.of("w", "x", "y", "z")
     );
 
+
     public List<String> letterCombinations(String digits) {
 
         if (digits.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return letterCombinations(digits, new HashSet<>(), "", 0);
+        return letterCombinations(digits, "", 0);
     }
 
-    private List<String> letterCombinations(String digits, Set<String> result, String combination, int i) {
+    private List<String> letterCombinations(String digits,
+                                            String combination, int i) {
 
         List<String> possibleLetters = NUMBERS_MAP.get(digits.charAt(i));
 
@@ -34,11 +39,12 @@ public class PhoneNumberLetters {
                     .toList();
         }
 
+        List<String> result = new ArrayList<>();
         for (String letter : possibleLetters) {
-            result.addAll(letterCombinations(digits, result, combination + letter, i + 1));
+            result.addAll(letterCombinations(digits, combination + letter, i + 1));
         }
 
-        return new ArrayList<>(result);
+        return result;
     }
 
 }
