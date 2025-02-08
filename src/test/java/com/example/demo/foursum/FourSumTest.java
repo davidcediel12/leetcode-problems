@@ -63,8 +63,8 @@ class FourSumTest {
         assertEquals(expectedQuadruplets.size(), actualQuadruplets.size());
 
         assertThat(actualQuadruplets.getFirst()).hasSameElementsAs(expectedQuadruplets.getFirst());
-    }
 
+    }
     @Test
     void shouldPruneRepeatedResults() {
         var actualQuadruplets = fourSum.fourSum(new int[]{-2, -1, -1, 1, 1, 2, 2}, 0);
@@ -86,6 +86,22 @@ class FourSumTest {
 
 
         assertThat(actualQuadruplets).isEmpty();
+    }
+
+
+    @Test
+    void shouldReturnQuadrupletsCorrectly6() {
+        var actualQuadruplets = fourSum.fourSum(new int[]{0,-1,0,1,-2,-5,3,5,0}, 6);
+
+        var expectedQuadruplets = List.of(
+                List.of(-2,0,3,5),
+                List.of(0,0,1,5)
+        );
+
+        assertThat(actualQuadruplets)
+                .usingRecursiveComparison()
+                .ignoringCollectionOrder()
+                .isEqualTo(expectedQuadruplets);
     }
 
 }

@@ -41,7 +41,7 @@ public class FourSum {
                     } else {
                         do {
                             leftChild++;
-                        } while (leftChild < rightChild && numbers.get(left).equals(numbers.get(leftChild - 1)));
+                        } while (leftChild < rightChild && numbers.get(leftChild).equals(numbers.get(leftChild - 1)));
                     }
                 }
             }
