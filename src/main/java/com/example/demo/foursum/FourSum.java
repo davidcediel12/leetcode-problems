@@ -32,8 +32,14 @@ public class FourSum {
                     if (sum == target) {
                         quadruplets.add(List.of(numbers.get(left), numbers.get(left2),
                                 numbers.get(leftChild), numbers.get(rightChild)));
-                        leftChild++;
-                        rightChild--;
+                        do {
+                            rightChild--;
+                        } while (rightChild > leftChild && numbers.get(rightChild).equals(numbers.get(rightChild + 1)));
+
+                        do {
+                            leftChild++;
+                        } while (leftChild < rightChild && numbers.get(leftChild).equals(numbers.get(leftChild - 1)));
+
                     } else if (sum > target) {
                         do {
                             rightChild--;
