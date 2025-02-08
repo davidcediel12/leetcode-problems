@@ -18,7 +18,7 @@ public class RemoveNNode {
 
         int indexToDelete = allNodes.size() - n;
 
-        if (indexToDelete - 1 == 0) {
+        if (indexToDelete == 0) {
             if (allNodes.size() == 1) {
                 return null;
             } else {
