@@ -30,10 +30,10 @@ class FourSumTest {
 
     @Test
     void shouldReturnQuadrupletsCorrectly2() {
-        var actualQuadruplets = fourSum.fourSum(new int[]{2,2,2,2}, 8);
+        var actualQuadruplets = fourSum.fourSum(new int[]{2, 2, 2, 2}, 8);
 
         var expectedQuadruplets = List.of(
-                List.of(2,2,2,2)
+                List.of(2, 2, 2, 2)
         );
 
         assertEquals(expectedQuadruplets, actualQuadruplets);
@@ -41,7 +41,7 @@ class FourSumTest {
 
     @Test
     void shouldReturnQuadrupletsCorrectly3() {
-        var actualQuadruplets = fourSum.fourSum(new int[]{-3,-1,0,2,4,5}, 0);
+        var actualQuadruplets = fourSum.fourSum(new int[]{-3, -1, 0, 2, 4, 5}, 0);
 
         var expectedQuadruplets = List.of(
                 List.of(-3, -1, 0, 4)
@@ -50,6 +50,34 @@ class FourSumTest {
         assertEquals(expectedQuadruplets.size(), actualQuadruplets.size());
 
         assertThat(actualQuadruplets.getFirst()).hasSameElementsAs(expectedQuadruplets.getFirst());
+    }
+
+    @Test
+    void shouldReturnQuadrupletsCorrectly4() {
+        var actualQuadruplets = fourSum.fourSum(new int[]{-3, -1, 0, 2, 4, 5}, 2);
+
+        var expectedQuadruplets = List.of(
+                List.of(-3, -1, 2, 4)
+        );
+
+        assertEquals(expectedQuadruplets.size(), actualQuadruplets.size());
+
+        assertThat(actualQuadruplets.getFirst()).hasSameElementsAs(expectedQuadruplets.getFirst());
+    }
+
+    @Test
+    void shouldPruneRepeatedResults() {
+        var actualQuadruplets = fourSum.fourSum(new int[]{-2, -1, -1, 1, 1, 2, 2}, 0);
+
+        var expectedQuadruplets = List.of(
+                List.of(-2, -1, 1, 2),
+                List.of(-1, -1, 1, 1)
+        );
+
+        assertThat(actualQuadruplets)
+                .usingRecursiveComparison()
+                .ignoringCollectionOrder()
+                .isEqualTo(expectedQuadruplets);
     }
 
 }

@@ -1,50 +1,41 @@
 package com.example.demo.foursum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class FourSum {
 
     public List<List<Integer>> fourSum(int[] nums, int target) {
 
         List<Integer> numbers = Arrays.stream(nums).sorted().boxed().toList();
-        int left = 0;
-        int right = numbers.size() - 1;
 
-        List<List<Integer>> quadruplets = new ArrayList<>();
+        Set<List<Integer>> quadruplets = new HashSet<>();
 
-        while (left < right) {
-            int leftChild = left + 1;
-            int rightChild = right - 1;
+        for (int left = 0; left < numbers.size(); left++) {
+            for (int left2 = left + 1; left2 < numbers.size() - 2; left2++) {
 
-            int sum = Integer.MAX_VALUE;
-            while (leftChild < rightChild) {
+                int leftChild = left2 + 1;
+                int rightChild = numbers.size() - 1;
 
-                sum = numbers.get(left) + numbers.get(leftChild) + numbers.get(rightChild) + numbers.get(right);
+                while (leftChild < rightChild) {
 
-                if (sum > target) {
-                    rightChild--;
-                } else if (sum < target) {
-                    leftChild++;
-                } else {
-                    quadruplets.add(List.of(
-                            numbers.get(left), numbers.get(leftChild), numbers.get(rightChild), numbers.get(right)));
-                    leftChild++;
-                    rightChild--;
+                    int sum = numbers.get(left) + numbers.get(left2) +
+                            numbers.get(leftChild) + numbers.get(rightChild);
+
+                    if (sum == target) {
+                        quadruplets.add(List.of(numbers.get(left), numbers.get(left2),
+                                numbers.get(leftChild), numbers.get(rightChild)));
+                        leftChild++;
+                        rightChild--;
+                    } else if (sum > target) {
+                        rightChild--;
+                    } else {
+                        leftChild++;
+                    }
                 }
             }
-
-            if (sum > target) {
-                right--;
-            } else if (sum < target) {
-                left++;
-            } else {
-                left++;
-                right--;
-            }
         }
-        return quadruplets;
-
+        return new ArrayList<>(quadruplets);
     }
+
+
 }
