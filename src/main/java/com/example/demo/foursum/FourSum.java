@@ -18,7 +18,7 @@ public class FourSum {
 
                 while (leftChild < rightChild) {
 
-                    int sum = numbers.get(left) + numbers.get(left2) +
+                    long sum = (long) numbers.get(left) + numbers.get(left2) +
                             numbers.get(leftChild) + numbers.get(rightChild);
 
                     if (sum == target) {

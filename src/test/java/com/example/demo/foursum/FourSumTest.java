@@ -80,4 +80,12 @@ class FourSumTest {
                 .isEqualTo(expectedQuadruplets);
     }
 
+    @Test
+    void shouldReturnEmptyQuadruplets() {
+        var actualQuadruplets = fourSum.fourSum(new int[]{1000000000,1000000000,1000000000,1000000000}, -294967296);
+
+
+        assertThat(actualQuadruplets).isEmpty();
+    }
+
 }
