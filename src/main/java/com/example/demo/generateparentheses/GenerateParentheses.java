@@ -2,37 +2,34 @@ package com.example.demo.generateparentheses;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class GenerateParentheses {
 
 
     public List<String> generateParenthesis(int n) {
-        return generateParenthesis(n, "", 0, 0);
+
+        List<String> result = new ArrayList<>();
+        generateParenthesis(n, "", 0, 0, result);
+        return result;
     }
 
 
-    private List<String> generateParenthesis(int n, String parentheses, int openParenthesis, int completedPairs) {
+    private void generateParenthesis(int n, String parentheses, int openParenthesis, int completedPairs,
+                                     List<String> result) {
 
 
         if (openParenthesis + completedPairs == n) {
-            List<String> result = new ArrayList<>();
             result.add(parentheses + ")".repeat(openParenthesis));
 
-            return result;
+            return;
         }
 
-        List<String> resultWithOpening =
-                generateParenthesis(n, parentheses + "(", openParenthesis + 1, completedPairs);
 
-        List<String> resultWithClosing = new ArrayList<>();
+        generateParenthesis(n, parentheses + "(", openParenthesis + 1, completedPairs, result);
 
         if (openParenthesis > 0) {
-            resultWithClosing =
-                    generateParenthesis(n, parentheses + ")",
-                            openParenthesis - 1, completedPairs + 1);
+            generateParenthesis(n, parentheses + ")",
+                    openParenthesis - 1, completedPairs + 1, result);
         }
-
-        return Stream.concat(resultWithOpening.stream(), resultWithClosing.stream()).toList();
     }
 }
