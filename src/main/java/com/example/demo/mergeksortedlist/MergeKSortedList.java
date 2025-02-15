@@ -1,37 +1,61 @@
 package com.example.demo.mergeksortedlist;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class MergeKSortedList {
 
-    public ListNode mergeKLists(ListNode[] lists) {
 
-        List<Integer> values = new ArrayList<>();
-        for (ListNode list : lists) {
-            ListNode listNode = list;
-            while (listNode != null) {
-                values.add(listNode.val);
-                listNode = listNode.next;
-            }
+    public ListNode mergeKLists(ListNode[] lists) {
+        return mergeKLists(Arrays.asList(lists));
+    }
+
+    private ListNode mergeKLists(List<ListNode> lists) {
+
+        if (lists.isEmpty()) {
+            return null;
+        }
+        if (lists.size() == 1) {
+            return lists.getFirst();
+        }
+        if (lists.size() == 2) {
+            return merge(lists.get(0), lists.get(1));
         }
 
-        values = values.stream().sorted().toList();
+        List<ListNode> left = lists.subList(0, lists.size() / 2);
+        List<ListNode> right = lists.subList(lists.size() / 2, lists.size());
+
+        ListNode leftResult = mergeKLists(left);
+        ListNode rightResult = mergeKLists(right);
+
+        return merge(leftResult, rightResult);
+    }
+
+    private ListNode merge(ListNode l1, ListNode l2) {
+
 
         ListNode head = null;
         ListNode tail = null;
 
-        for (Integer value : values) {
-            ListNode actual = new ListNode(value);
+        while (l1 != null || l2 != null) {
+            ListNode actualNode;
+            if (l1 == null || (l2 != null && l2.val <= l1.val)) {
+                actualNode = new ListNode(l2.val);
+                l2 = l2.next;
+            } else {
+                actualNode = new ListNode(l1.val);
+                l1 = l1.next;
+            }
+
             if (head == null) {
-                head = actual;
+                head = actualNode;
             } else if (tail == null) {
-                tail = actual;
+                tail = actualNode;
                 head.next = tail;
             } else {
-                tail.next = actual;
-                tail = actual;
+                tail.next = actualNode;
+                tail = actualNode;
             }
         }
         return head;
