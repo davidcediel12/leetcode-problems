@@ -11,4 +11,4 @@ Input: head = [1,2,3,4]
 
 Output: [2,1,4,3]
 
-More reference at [24. Swap Nodes in Pairs](https://leetcode.com/problems/generate-parentheses/)
+More reference at [24. Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)
