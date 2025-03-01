@@ -60,13 +60,32 @@ class ReverseNodesKGroupTest {
                                 new ReverseNodesKGroup.ListNode(5)))));
 
 
-        ReverseNodesKGroup.ListNode expected = new ReverseNodesKGroup.ListNode(3,
-                new ReverseNodesKGroup.ListNode(2, new ReverseNodesKGroup.ListNode(1,
+        ReverseNodesKGroup.ListNode expected = new ReverseNodesKGroup.ListNode(1,
+                new ReverseNodesKGroup.ListNode(2, new ReverseNodesKGroup.ListNode(3,
                         new ReverseNodesKGroup.ListNode(4,
                                 new ReverseNodesKGroup.ListNode(5)))));
 
 
         var actual = reverseNodesKGroup.reverseKGroup(initial, 1);
+
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    void shouldSwapCorrectly4() {
+
+        ReverseNodesKGroup.ListNode initial = new ReverseNodesKGroup.ListNode(1,
+                new ReverseNodesKGroup.ListNode(2, new ReverseNodesKGroup.ListNode(3,
+                        new ReverseNodesKGroup.ListNode(4))));
+
+
+        ReverseNodesKGroup.ListNode expected = new ReverseNodesKGroup.ListNode(4,
+                new ReverseNodesKGroup.ListNode(3, new ReverseNodesKGroup.ListNode(2,
+                        new ReverseNodesKGroup.ListNode(1))));
+
+
+        var actual = reverseNodesKGroup.reverseKGroup(initial, 4);
 
         assertEquals(expected, actual);
 
