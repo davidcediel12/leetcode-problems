@@ -7,6 +7,26 @@ import java.util.Set;
 
 public class RemoveDuplicates {
 
+
+
+    public int removeDuplicates(int[] nums) {
+
+        Set<Integer> existing = new HashSet<>();
+
+        int actualIndex = 0;
+        for (int i = 0; i < nums.length; i++) {
+
+            if(!existing.contains(nums[i])){
+                nums[actualIndex] = nums[i];
+                existing.add(nums[i]);
+                actualIndex++;
+            }
+        }
+
+        return existing.size();
+    }
+
+    @Deprecated(since = "Runtime 6ms")
     public int removeDuplicates2(int[] nums) {
 
         Set<Integer> existing = new HashSet<>();
@@ -46,8 +66,8 @@ public class RemoveDuplicates {
         return existing.size();
     }
 
-
-    public int removeDuplicates(int[] nums) {
+    @Deprecated(since = "Runtime 8ms")
+    public int removeDuplicates3(int[] nums) {
 
 
         List<Integer> distinctNumbers = Arrays.stream(nums)
@@ -61,5 +81,10 @@ public class RemoveDuplicates {
 
         return distinctNumbers.size();
     }
+
+
+
+
+
 
 }
