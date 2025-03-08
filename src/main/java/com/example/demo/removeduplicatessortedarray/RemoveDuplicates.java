@@ -24,7 +24,7 @@ public class RemoveDuplicates {
                 boolean noDifferentNumbers = j == virtualEnd;
 
                 if(noDifferentNumbers){
-                    return nums[i];
+                    return existing.size();
                 }
 
                 existing.add(nums[j]);

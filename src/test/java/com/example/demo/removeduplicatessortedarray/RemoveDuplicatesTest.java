@@ -34,6 +34,19 @@ class RemoveDuplicatesTest {
     }
 
 
+    @Test
+    void shouldRemoveDuplicatesCorrectly3() {
+
+        int[] expected = new int[]{0};
+
+        int[] input = new int[]{0,0,0,0,0};
+
+        int actualK = removeDuplicates.removeDuplicates(input);
+
+        assertCorrectness(actualK, expected, input);
+    }
+
+
     private static void assertCorrectness(int actualK, int[] expected, int[] input) {
         assertEquals(expected.length, actualK);
 
