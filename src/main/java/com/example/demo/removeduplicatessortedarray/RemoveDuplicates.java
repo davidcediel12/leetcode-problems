@@ -11,19 +11,23 @@ public class RemoveDuplicates {
 
     public int removeDuplicates(int[] nums) {
 
-        Set<Integer> existing = new HashSet<>();
-
+        int actualNumber = -101;
         int actualIndex = 0;
+        int different = 0;
+
         for (int i = 0; i < nums.length; i++) {
 
-            if(!existing.contains(nums[i])){
+            if(nums[i] != actualNumber){
+                actualNumber = nums[i];
+
                 nums[actualIndex] = nums[i];
-                existing.add(nums[i]);
+
                 actualIndex++;
+                different++;
             }
         }
 
-        return existing.size();
+        return different;
     }
 
     @Deprecated(since = "Runtime 6ms")
