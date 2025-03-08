@@ -1,73 +1,45 @@
 package com.example.demo.reversenodeskgroup;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class ReverseNodesKGroup {
 
-    public ListNode reverseKGroup(ListNode head, int k) {
 
-        if (k == 1) {
-            return head;
+    public ListNode reverse(ListNode init, ListNode end) {
+
+        ListNode past = null;
+        ListNode current = init;
+
+        while (!Objects.equals(current, end)) {
+
+            ListNode next = current.next;
+
+            current.next = past;
+            past = current;
+            current = next;
         }
+        return past;
+    }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
         ListNode iterator = head;
 
-        ListNode pastPast = null; // To reconnect previous node to the swapped 1 (past past) --> 4 (iterator) --> 3 (past)
+        int i = 0;
 
-        List<ListNode> toReverse = new ArrayList<>();
-
-
-        int i = 1;
-        boolean isMomentToChange;
-        boolean changedHead = false;
-
-        while (iterator != null) {
-
-            isMomentToChange = i == k;
-
-            if (isMomentToChange) {
-                if (pastPast != null) {
-                    pastPast.next = iterator;
-                }
-
-                ListNode next = iterator.next;
-
-                for (int reverseIndex = 0; reverseIndex < toReverse.size(); reverseIndex++) {
-
-                    if (reverseIndex == 0) {
-                        toReverse.get(reverseIndex).next = next;
-                    } else {
-                        toReverse.get(reverseIndex).next = toReverse.get(reverseIndex - 1);
-                    }
-                }
-
-                iterator.next = toReverse.getLast();
-                toReverse.clear();
-
-                if (!changedHead) {
-                    head = iterator;
-                    changedHead = true;
-                }
-
-
-                while (i > 1) {
-                    iterator = iterator.next;
-                    i--;
-                }
-
-                pastPast = iterator;
-                i = 0;
-
-            } else {
-                toReverse.add(iterator);
-            }
-            iterator = iterator == null ? null : iterator.next;
+        while (i < k && iterator != null) {
+            iterator = iterator.next;
             i++;
         }
 
-        return head;
+        if (i < k) {
+            return head;
+        }
+
+        ListNode newHead = reverse(head, iterator);
+        head.next = reverseKGroup(iterator, k);
+
+        return newHead;
     }
 
     public static class ListNode {
