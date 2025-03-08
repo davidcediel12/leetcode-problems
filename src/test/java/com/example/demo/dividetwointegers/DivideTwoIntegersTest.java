@@ -66,5 +66,13 @@ class DivideTwoIntegersTest {
         assertEquals(1, quotient);
     }
 
+    @Test
+    void shouldDivideCorrectly7() {
+
+        int quotient = divideTwoIntegers.divide(-2147483648, 1);
+
+        assertEquals(-2147483648, quotient);
+    }
+
 
 }
