@@ -41,4 +41,30 @@ class DivideTwoIntegersTest {
         assertEquals(-2, quotient);
     }
 
+    @Test
+    void shouldDivideCorrectly4() {
+
+        int quotient = divideTwoIntegers.divide(-7, 3);
+
+        assertEquals(-2, quotient);
+    }
+
+
+    @Test
+    void shouldDivideCorrectly5() {
+
+        int quotient = divideTwoIntegers.divide(-1, -1);
+
+        assertEquals(1, quotient);
+    }
+
+    @Test
+    void shouldDivideCorrectly6() {
+
+        int quotient = divideTwoIntegers.divide(1, 1);
+
+        assertEquals(1, quotient);
+    }
+
+
 }

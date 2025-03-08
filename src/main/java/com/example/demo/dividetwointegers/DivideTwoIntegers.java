@@ -3,6 +3,15 @@ package com.example.demo.dividetwointegers;
 public class DivideTwoIntegers {
 
     public int divide(int dividend, int divisor) {
+
+        if(dividend == 0){
+            return 0;
+        }
+
+        if(dividend == divisor){
+            return 1;
+        }
+
         if ((dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0)) {
             return divideBothSameSign(dividend, divisor);
         }
@@ -18,7 +27,10 @@ public class DivideTwoIntegers {
 
         int quotient = 0;
 
-        boolean dividendSmaller = dividend < divisor;
+        if((dividend > 0 && divisor > dividend) || (dividend < 0 && dividend > divisor) ){
+            return 0;
+        }
+        boolean dividendSmaller = dividend <= divisor;
 
         while (quotient < Integer.MAX_VALUE && ((dividendSmaller && dividend <= divisor) ||
                 (!dividendSmaller && dividend >= divisor))) {
