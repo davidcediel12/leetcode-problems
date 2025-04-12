@@ -14,16 +14,11 @@ public class SubstringWithConcatenation {
         List<Integer> indexes = new ArrayList<>();
 
 
-        int i = 0;
-
-        while (i < s.length()) {
+        for (int i = 0; i < s.length(); i++) {
             boolean isValidString = checkConcatenatedString(s, wordList, i, wordLength);
 
             if (isValidString) {
                 indexes.add(i);
-                i += wordLength;
-            } else {
-                i++;
             }
         }
 
