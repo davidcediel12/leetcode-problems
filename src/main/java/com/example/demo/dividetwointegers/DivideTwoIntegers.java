@@ -184,6 +184,10 @@ public class DivideTwoIntegers {
         if(quotient < Integer.MIN_VALUE){
             return Integer.MIN_VALUE;
         }
+
+        if((dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0)){
+            return (int) (0 - quotient);
+        }
         return (int) quotient;
     }
 }
