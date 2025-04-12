@@ -6,7 +6,7 @@ public class SubstringWithConcatenation {
 
     public List<Integer> findSubstring(String s, String[] words) {
 
-        Set<String> wordsSet = new HashSet<>(Arrays.stream(words).toList());
+        List<String> wordList = Arrays.asList(words);
         int wordLength = words[0].length();
 
         List<Integer> indexes = new ArrayList<>();
@@ -14,33 +14,33 @@ public class SubstringWithConcatenation {
 
 
         for(int i = 0; i < s.length(); i += wordLength){
-            checkConcatenatedString(s, wordsSet, i, wordLength, indexes);
+            checkConcatenatedString(s, wordList, i, wordLength, indexes);
         }
 
         return indexes;
 
     }
 
-    private void checkConcatenatedString(String s, Set<String> wordsSet,
+    private void checkConcatenatedString(String s, List<String> wordList,
                                          int actualIndex, int wordLength, List<Integer> indexes) {
 
-       Set<String> copyWordSet = new HashSet<>(wordsSet);
 
+        List<String> copyWordList = new ArrayList<>(wordList);
        int movingIndex = actualIndex;
 
-       while(!copyWordSet.isEmpty() && movingIndex <= s.length()){
+       while(!copyWordList.isEmpty() && movingIndex <= s.length() && movingIndex + wordLength <= s.length()){
 
            String word = s.substring(movingIndex, movingIndex + wordLength);
 
-           if(!copyWordSet.contains(word)){
+           if(!copyWordList.contains(word)){
                return;
            }
 
-           copyWordSet.remove(word);
+           copyWordList.remove(word);
            movingIndex += wordLength;
        }
 
-       if(copyWordSet.isEmpty()){
+       if(copyWordList.isEmpty()){
            indexes.add(actualIndex);
        }
     }
