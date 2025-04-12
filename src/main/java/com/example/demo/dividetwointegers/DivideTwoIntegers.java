@@ -141,8 +141,20 @@ public class DivideTwoIntegers {
 
     public int divide(int dividend, int divisor){
 
-        long dividendL = Math.abs(dividend);
-        long divisorL = Math.abs(divisor);
+        if (dividend == 0) {
+            return 0;
+        }
+
+        if (dividend == divisor) {
+            return 1;
+        }
+
+        if (divisor == 1) {
+            return dividend;
+        }
+
+        long dividendL = Math.abs((long) dividend);
+        long divisorL = Math.abs((long) divisor);
 
 
         int power = 0;
@@ -151,22 +163,27 @@ public class DivideTwoIntegers {
             power += 1;
         }
 
-        int result = 0;
-        int quotient = 0;
+        long result = 0;
+        long quotient = 0;
 
         while(power >= 0){
-            int pow = (int) Math.pow(2, power);
 
-            int tempResult = result + divisor * pow;
+            long tempResult = result + (divisorL << power);
 
-            if(tempResult <= divisor){
-                quotient += pow;
+            if(tempResult <= dividendL){
+                quotient += 1L << power;
                 result = tempResult;
             }
 
             power--;
         }
 
-        return quotient;
+        if(quotient > Integer.MAX_VALUE){
+            return Integer.MAX_VALUE;
+        }
+        if(quotient < Integer.MIN_VALUE){
+            return Integer.MIN_VALUE;
+        }
+        return (int) quotient;
     }
 }
