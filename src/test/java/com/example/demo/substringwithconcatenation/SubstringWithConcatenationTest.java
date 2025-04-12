@@ -41,4 +41,14 @@ class SubstringWithConcatenationTest {
 
     }
 
+    @Test
+    void shouldReturnCorrectIndexes4(){
+
+        List<Integer> actualIndexes = substringWithConcatenation.findSubstring(
+                "lingmindraboofooowingdingbarrwingmonkeypoundcake", new String[]{"fooo","barr","wing","ding","wing"});
+
+        assertEquals(List.of(13), actualIndexes);
+
+    }
+
 }

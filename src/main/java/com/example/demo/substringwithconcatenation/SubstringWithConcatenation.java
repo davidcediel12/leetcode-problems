@@ -1,6 +1,8 @@
 package com.example.demo.substringwithconcatenation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SubstringWithConcatenation {
 
@@ -12,36 +14,42 @@ public class SubstringWithConcatenation {
         List<Integer> indexes = new ArrayList<>();
 
 
+        int i = 0;
 
-        for(int i = 0; i < s.length(); i += wordLength){
-            checkConcatenatedString(s, wordList, i, wordLength, indexes);
+        while (i < s.length()) {
+            boolean isValidString = checkConcatenatedString(s, wordList, i, wordLength);
+
+            if (isValidString) {
+                indexes.add(i);
+                i += wordLength;
+            } else {
+                i++;
+            }
         }
 
         return indexes;
 
     }
 
-    private void checkConcatenatedString(String s, List<String> wordList,
-                                         int actualIndex, int wordLength, List<Integer> indexes) {
+    private boolean checkConcatenatedString(String s, List<String> wordList,
+                                            int actualIndex, int wordLength) {
 
 
         List<String> copyWordList = new ArrayList<>(wordList);
-       int movingIndex = actualIndex;
+        int movingIndex = actualIndex;
 
-       while(!copyWordList.isEmpty() && movingIndex <= s.length() && movingIndex + wordLength <= s.length()){
+        while (!copyWordList.isEmpty() && movingIndex <= s.length() && movingIndex + wordLength <= s.length()) {
 
-           String word = s.substring(movingIndex, movingIndex + wordLength);
+            String word = s.substring(movingIndex, movingIndex + wordLength);
 
-           if(!copyWordList.contains(word)){
-               return;
-           }
+            if (!copyWordList.contains(word)) {
+                return false;
+            }
 
-           copyWordList.remove(word);
-           movingIndex += wordLength;
-       }
+            copyWordList.remove(word);
+            movingIndex += wordLength;
+        }
 
-       if(copyWordList.isEmpty()){
-           indexes.add(actualIndex);
-       }
+        return copyWordList.isEmpty();
     }
 }
