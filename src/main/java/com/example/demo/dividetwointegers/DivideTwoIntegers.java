@@ -2,17 +2,17 @@ package com.example.demo.dividetwointegers;
 
 public class DivideTwoIntegers {
 
-    public int divide(int dividend, int divisor) {
+    public int divide2(int dividend, int divisor) {
 
-        if(dividend == 0){
+        if (dividend == 0) {
             return 0;
         }
 
-        if(dividend == divisor){
+        if (dividend == divisor) {
             return 1;
         }
 
-        if(divisor == 1){
+        if (divisor == 1) {
             return dividend;
         }
 
@@ -31,7 +31,7 @@ public class DivideTwoIntegers {
 
         int quotient = 0;
 
-        if((dividend > 0 && divisor > dividend) || (dividend < 0 && dividend > divisor) ){
+        if ((dividend > 0 && divisor > dividend) || (dividend < 0 && dividend > divisor)) {
             return 0;
         }
         boolean dividendSmaller = dividend <= divisor;
@@ -73,5 +73,69 @@ public class DivideTwoIntegers {
         return quotient;
     }
 
+
+    public int divide(int dividend, int divisor) {
+
+        if (noMoreDivision(dividend, divisor)) {
+            return 0;
+        }
+
+        return divide2(dividend, divisor, 0)
+                .times();
+    }
+
+    private static int getInitialResult(int dividend, int divisor) {
+        int result;
+        if ((divisor > 0 && dividend < 0) || (divisor < 0 && dividend > 0)) {
+            result = -1;
+        } else {
+            result = 1;
+        }
+        return result;
+    }
+
+
+    public Values divide2(int dividend, int divisor, int times) {
+
+
+        if (noMoreDivision(dividend, divisor)) {
+            return new Values(divisor, times, false);
+        }
+
+        times = times != 0 ? times + times : getInitialResult(dividend, divisor);
+
+
+        Values values = divide2(dividend,
+                divisor + divisor,
+                times);
+
+        times = values.isPossible ? times + values.times : times;
+        int accResult = values.isPossible ? values.accumulatedResult : divisor;
+
+        return new Values(accResult, times, true);
+    }
+
+    private static boolean noMoreDivision(int dividend, int divisor) {
+        if (divisor == Integer.MAX_VALUE || divisor == Integer.MIN_VALUE) {
+            return true;
+        }
+
+        if (dividend > 0 && divisor > 0) {
+            return divisor > dividend;
+        }
+
+        if (dividend < 0 && divisor < 0) {
+            return divisor < dividend;
+        }
+
+        if (dividend > 0 && divisor < 0) {
+            return Math.abs(divisor) > dividend;
+        }
+
+        return Math.abs(dividend) > divisor;
+    }
+
+    public record Values(int accumulatedResult, int times, boolean isPossible) {
+    }
 
 }

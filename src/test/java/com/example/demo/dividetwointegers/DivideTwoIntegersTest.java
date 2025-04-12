@@ -15,7 +15,8 @@ class DivideTwoIntegersTest {
     @ParameterizedTest
     @CsvSource(value = {
             "10,3,3",
-            "-2147483648,-1,2147483647"
+            "-2147483648,-1,2147483647",
+            "-2147483648,-3,715827882"
     })
     void shouldDivideCorrectly(int dividend, int divisor, int expectedQuotient) {
 
@@ -73,6 +74,16 @@ class DivideTwoIntegersTest {
 
         assertEquals(-2147483648, quotient);
     }
+
+
+    @Test
+    void shouldDivideCorrectly8() {
+
+        int quotient = divideTwoIntegers.divide(10, 3);
+
+        assertEquals(3, quotient);
+    }
+
 
 
 }
