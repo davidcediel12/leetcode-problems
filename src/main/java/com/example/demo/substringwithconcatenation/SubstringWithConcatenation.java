@@ -1,21 +1,22 @@
 package com.example.demo.substringwithconcatenation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class SubstringWithConcatenation {
 
     public List<Integer> findSubstring(String s, String[] words) {
 
-        List<String> wordList = Arrays.asList(words);
+        Map<String, Integer> wordsMap = new HashMap<>();
+        Arrays.stream(words)
+                .forEach(word -> wordsMap.put(word, wordsMap.getOrDefault(word, 0) + 1));
+
         int wordLength = words[0].length();
 
         List<Integer> indexes = new ArrayList<>();
 
 
         for (int i = 0; i < s.length(); i++) {
-            boolean isValidString = checkConcatenatedString(s, wordList, i, wordLength);
+            boolean isValidString = checkConcatenatedString(s, wordsMap, i, wordLength);
 
             if (isValidString) {
                 indexes.add(i);
@@ -26,25 +27,30 @@ public class SubstringWithConcatenation {
 
     }
 
-    private boolean checkConcatenatedString(String s, List<String> wordList,
+    private boolean checkConcatenatedString(String s, Map<String, Integer> wordsMap,
                                             int actualIndex, int wordLength) {
 
 
-        List<String> copyWordList = new ArrayList<>(wordList);
+        Map<String, Integer> copyWordsMap = new HashMap<>(wordsMap);
         int movingIndex = actualIndex;
 
-        while (!copyWordList.isEmpty() && movingIndex <= s.length() && movingIndex + wordLength <= s.length()) {
+        while (!copyWordsMap.isEmpty() && movingIndex <= s.length() && movingIndex + wordLength <= s.length()) {
 
             String word = s.substring(movingIndex, movingIndex + wordLength);
 
-            if (!copyWordList.contains(word)) {
+            if (copyWordsMap.getOrDefault(word, 0) == 0) {
                 return false;
             }
 
-            copyWordList.remove(word);
+            int remainingNumberOfThisWord = copyWordsMap.get(word) - 1;
+            if (remainingNumberOfThisWord > 0) {
+                copyWordsMap.put(word, remainingNumberOfThisWord);
+            } else {
+                copyWordsMap.remove(word);
+            }
             movingIndex += wordLength;
         }
 
-        return copyWordList.isEmpty();
+        return copyWordsMap.isEmpty();
     }
 }
