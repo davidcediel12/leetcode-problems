@@ -1,7 +1,7 @@
 package com.example.demo.dividetwointegers;
 
 public class DivideTwoIntegers {
-
+    // TODO FINISH IT
     public int divide2(int dividend, int divisor) {
 
         if (dividend == 0) {
@@ -74,7 +74,7 @@ public class DivideTwoIntegers {
     }
 
 
-    public int divide(int dividend, int divisor) {
+    public int divide4(int dividend, int divisor) {
 
         if (noMoreDivision(dividend, divisor)) {
             return 0;
@@ -138,4 +138,35 @@ public class DivideTwoIntegers {
     public record Values(int accumulatedResult, int times, boolean isPossible) {
     }
 
+
+    public int divide(int dividend, int divisor){
+
+        long dividendL = Math.abs(dividend);
+        long divisorL = Math.abs(divisor);
+
+
+        int power = 0;
+
+        while(divisorL * Math.pow(2, power + 1D) <= dividendL){
+            power += 1;
+        }
+
+        int result = 0;
+        int quotient = 0;
+
+        while(power >= 0){
+            int pow = (int) Math.pow(2, power);
+
+            int tempResult = result + divisor * pow;
+
+            if(tempResult <= divisor){
+                quotient += pow;
+                result = tempResult;
+            }
+
+            power--;
+        }
+
+        return quotient;
+    }
 }
