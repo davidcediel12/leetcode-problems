@@ -44,14 +44,14 @@ public class SubstringWithConcatenation {
 
             if (copyWordsMap.getOrDefault(word, 0) == 0) {
                 if (wordsMap.containsKey(word)) {
-                    while (!wordsAtIndex.get(startingWindowSlice).equals(word)) {
+                    while (!wordsAtIndex.get(startingWindowSlice).equals(word)) { // move the sliding window
                         String startingWord = wordsAtIndex.get(startingWindowSlice);
                         copyWordsMap.put(startingWord, copyWordsMap.getOrDefault(startingWord, 0) + 1);
                         startingWindowSlice += wordLength;
                     }
                     startingWindowSlice += wordLength;
 
-                } else {
+                } else { // start again
                     copyWordsMap = new HashMap<>(wordsMap);
                     startingWindowSlice = movingIndex + wordLength;
                 }
@@ -66,7 +66,8 @@ public class SubstringWithConcatenation {
                     copyWordsMap.remove(word);
                 }
 
-                if (copyWordsMap.isEmpty()) {
+                boolean validSolution = copyWordsMap.isEmpty();
+                if (validSolution) {
                     validatedIndexes.add(startingWindowSlice);
                     copyWordsMap.put(wordsAtIndex.get(startingWindowSlice), 1);
                     startingWindowSlice += wordLength;
