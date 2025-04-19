@@ -35,15 +35,14 @@ public class SubstringWithConcatenation {
 
         Map<String, Integer> copyWordsMap = new HashMap<>(wordsMap);
 
-        String word = "";
-
         while (movingIndex + wordLength <= s.length()) {
 
-            word = s.substring(movingIndex, movingIndex + wordLength);
+            String word = s.substring(movingIndex, movingIndex + wordLength);
             wordsAtIndex.put(movingIndex, word);
 
             if (copyWordsMap.getOrDefault(word, 0) == 0) {
-                if (wordsMap.containsKey(word)) {
+                boolean isValidWord = wordsMap.containsKey(word);
+                if (isValidWord) {
                     while (!wordsAtIndex.get(startingWindowSlice).equals(word)) { // move the sliding window
                         String startingWord = wordsAtIndex.get(startingWindowSlice);
                         copyWordsMap.put(startingWord, copyWordsMap.getOrDefault(startingWord, 0) + 1);
@@ -58,8 +57,6 @@ public class SubstringWithConcatenation {
             } else {
 
                 int remainingNumberOfThisWord = copyWordsMap.get(word) - 1;
-
-
                 if (remainingNumberOfThisWord > 0) {
                     copyWordsMap.put(word, remainingNumberOfThisWord);
                 } else {
