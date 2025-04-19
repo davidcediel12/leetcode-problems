@@ -10,13 +10,14 @@ public class SubstringWithConcatenation {
         Arrays.stream(words)
                 .forEach(word -> wordsMap.put(word, wordsMap.getOrDefault(word, 0) + 1));
 
+        int wordCount = words.length;
         int wordLength = words[0].length();
 
         Set<Integer> indexes = new HashSet<>();
 
 
         for (int startingPoint = 0; startingPoint < wordLength; startingPoint++) {
-            addValidIndexesForWindowSize(s, wordsMap, startingPoint, wordLength, indexes);
+            addValidIndexesForWindowSize(s, wordsMap, startingPoint, wordLength, indexes, wordCount);
 
         }
 
@@ -25,7 +26,7 @@ public class SubstringWithConcatenation {
     }
 
     private void addValidIndexesForWindowSize(String s, Map<String, Integer> wordsMap,
-                                              int startingPoint, int wordLength, Set<Integer> validatedIndexes) {
+                                              int startingPoint, int wordLength, Set<Integer> validatedIndexes, int wordCount) {
 
         Map<Integer, String> wordsAtIndex = new HashMap<>();
 
@@ -34,6 +35,7 @@ public class SubstringWithConcatenation {
         int movingIndex = startingPoint;
 
         Map<String, Integer> copyWordsMap = new HashMap<>(wordsMap);
+        int count = 0;
 
         while (movingIndex + wordLength <= s.length()) {
 
@@ -47,27 +49,27 @@ public class SubstringWithConcatenation {
                         String startingWord = wordsAtIndex.get(startingWindowSlice);
                         copyWordsMap.put(startingWord, copyWordsMap.getOrDefault(startingWord, 0) + 1);
                         startingWindowSlice += wordLength;
+                        count--;
                     }
                     startingWindowSlice += wordLength;
 
                 } else { // start again
                     copyWordsMap = new HashMap<>(wordsMap);
                     startingWindowSlice = movingIndex + wordLength;
+                    count = 0;
                 }
             } else {
-
+                count++;
                 int remainingNumberOfThisWord = copyWordsMap.get(word) - 1;
-                if (remainingNumberOfThisWord > 0) {
-                    copyWordsMap.put(word, remainingNumberOfThisWord);
-                } else {
-                    copyWordsMap.remove(word);
-                }
 
-                boolean validSolution = copyWordsMap.isEmpty();
+                copyWordsMap.put(word, remainingNumberOfThisWord);
+
+                boolean validSolution = count == wordCount;
                 if (validSolution) {
                     validatedIndexes.add(startingWindowSlice);
                     copyWordsMap.put(wordsAtIndex.get(startingWindowSlice), 1);
                     startingWindowSlice += wordLength;
+                    count--;
                 }
             }
             movingIndex += wordLength;
