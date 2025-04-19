@@ -12,45 +12,68 @@ public class SubstringWithConcatenation {
 
         int wordLength = words[0].length();
 
-        List<Integer> indexes = new ArrayList<>();
+        Set<Integer> indexes = new HashSet<>();
 
 
-        for (int i = 0; i < s.length(); i++) {
-            boolean isValidString = checkConcatenatedString(s, wordsMap, i, wordLength);
+        for (int startingPoint = 0; startingPoint < words.length; startingPoint++) {
+            addValidIndexesForWindowSize(s, wordsMap, startingPoint, wordLength, indexes);
 
-            if (isValidString) {
-                indexes.add(i);
-            }
         }
 
-        return indexes;
+        return indexes.stream().toList();
 
     }
 
-    private boolean checkConcatenatedString(String s, Map<String, Integer> wordsMap,
-                                            int actualIndex, int wordLength) {
+    private void addValidIndexesForWindowSize(String s, Map<String, Integer> wordsMap,
+                                              int startingPoint, int wordLength, Set<Integer> validatedIndexes) {
 
+        Map<Integer, String> wordsAtIndex = new HashMap<>();
+
+        int startingWindowSlice = startingPoint;
+
+        int movingIndex = startingPoint;
 
         Map<String, Integer> copyWordsMap = new HashMap<>(wordsMap);
-        int movingIndex = actualIndex;
 
-        while (!copyWordsMap.isEmpty() && movingIndex <= s.length() && movingIndex + wordLength <= s.length()) {
+        String word = "";
 
-            String word = s.substring(movingIndex, movingIndex + wordLength);
+        while (movingIndex + wordLength <= s.length()) {
+
+            word = s.substring(movingIndex, movingIndex + wordLength);
+            wordsAtIndex.put(movingIndex, word);
 
             if (copyWordsMap.getOrDefault(word, 0) == 0) {
-                return false;
-            }
+                if (wordsMap.containsKey(word)) {
+                    while (!wordsAtIndex.get(startingWindowSlice).equals(word)) {
+                        String startingWord = wordsAtIndex.get(startingWindowSlice);
+                        copyWordsMap.put(startingWord, copyWordsMap.getOrDefault(startingWord, 0) + 1);
+                        startingWindowSlice += wordLength;
+                    }
+                    startingWindowSlice += wordLength;
 
-            int remainingNumberOfThisWord = copyWordsMap.get(word) - 1;
-            if (remainingNumberOfThisWord > 0) {
-                copyWordsMap.put(word, remainingNumberOfThisWord);
+                } else {
+                    copyWordsMap = new HashMap<>(wordsMap);
+                    startingWindowSlice = movingIndex + wordLength;
+                }
             } else {
-                copyWordsMap.remove(word);
+
+                int remainingNumberOfThisWord = copyWordsMap.get(word) - 1;
+
+
+                if (remainingNumberOfThisWord > 0) {
+                    copyWordsMap.put(word, remainingNumberOfThisWord);
+                } else {
+                    copyWordsMap.remove(word);
+                }
+
+                if (copyWordsMap.isEmpty()) {
+                    validatedIndexes.add(startingWindowSlice);
+                    copyWordsMap.put(wordsAtIndex.get(startingWindowSlice), 1);
+                    startingWindowSlice += wordLength;
+                }
             }
             movingIndex += wordLength;
         }
 
-        return copyWordsMap.isEmpty();
     }
 }
