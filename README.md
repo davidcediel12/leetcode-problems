@@ -1,6 +1,8 @@
 # Leetcode problems
 
-Hi everyone, this repo is intended to store all the leetcode problems that I'm doing. The problems are solved using Java.
+Hi everyone, this repo is intended to store all the leetcode problems that I'm doing. 
+
+The problems are solved using Java. Each one has their test suite to validate the problem [here](src/test/java/com/example/demo/)
 
 To view all the problems: [Problem Set](https://leetcode.com/problemset/)
 
@@ -38,3 +40,4 @@ To view all the problems: [Problem Set](https://leetcode.com/problemset/)
 28. [Find the Index of the First Occurrence in a String](src/main/java/com/example/demo/indexfirstoccurrence)
 29. [Divide Two Integers](src/main/java/com/example/demo/dividetwointegers)
 30. [Substring with Concatenation of All Words](src/main/java/com/example/demo/substringwithconcatenation)
+31. [31. Next Permutation](src/main/java/com/example/demo/nextpermutation)
