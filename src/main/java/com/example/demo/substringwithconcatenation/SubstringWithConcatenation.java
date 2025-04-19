@@ -15,7 +15,7 @@ public class SubstringWithConcatenation {
         Set<Integer> indexes = new HashSet<>();
 
 
-        for (int startingPoint = 0; startingPoint < words.length; startingPoint++) {
+        for (int startingPoint = 0; startingPoint < wordLength; startingPoint++) {
             addValidIndexesForWindowSize(s, wordsMap, startingPoint, wordLength, indexes);
 
         }

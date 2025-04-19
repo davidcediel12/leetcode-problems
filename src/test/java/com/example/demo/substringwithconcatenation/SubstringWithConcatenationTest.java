@@ -62,4 +62,14 @@ class SubstringWithConcatenationTest {
 
     }
 
+    @Test
+    void shouldReturnCorrectIndexes6(){
+
+        List<Integer> actualIndexes = substringWithConcatenation.findSubstring(
+                "dddddddddddd", new String[]{"dddd","dddd"});
+
+        assertEquals(List.of(0,1,2,3,4), actualIndexes);
+
+    }
+
 }
