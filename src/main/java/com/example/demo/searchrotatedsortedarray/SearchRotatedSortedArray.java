@@ -20,13 +20,19 @@ public class SearchRotatedSortedArray {
             if (pivotNumber == target) {
                 return pivot;
             }
-            if (pivotNumber > target &&
-                    (nums[from] > pivotNumber || nums[from] < target)) {
+            if ((pivotNumber >= target && nums[from] <= target) ||
+                    (nums[from] > pivotNumber  && (pivotNumber >= target || nums[to] < target))) {
                 to = pivot;
             } else {
                 from = pivot;
             }
         }
-        return nums[from] == target || nums[to] == target ? from : -1;
+        if (nums[from] == target) {
+            return from;
+        }
+        if (nums[to] == target) {
+            return to;
+        }
+        return -1;
     }
 }
