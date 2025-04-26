@@ -36,4 +36,10 @@ class LongestValidParenthesesTest {
     }
 
 
+    @Test
+    void shouldReturnMaxValidParenthesesCorrectly6(){
+        assertEquals(2, validator.longestValidParentheses("))))((()(("));
+    }
+
+
 }

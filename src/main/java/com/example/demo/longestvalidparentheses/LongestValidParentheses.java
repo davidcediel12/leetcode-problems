@@ -21,6 +21,9 @@ public class LongestValidParentheses {
                 openParentheses.push(c);
                 if (i > 0 && s.charAt(i - 1) == '(') {
                     pastResults.add(longestValidParentheses);
+                    if(longestValidParentheses > maxLongestValidParentheses){
+                        maxLongestValidParentheses = longestValidParentheses;
+                    }
                     longestValidParentheses = 0;
                 }
             } else if (openParentheses.isEmpty()) {
