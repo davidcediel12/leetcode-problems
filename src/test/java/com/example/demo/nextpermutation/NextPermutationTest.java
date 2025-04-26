@@ -35,4 +35,13 @@ class NextPermutationTest {
         assertThat(actualNums)
                 .containsExactly(1, 2, 3);
     }
+
+    @Test
+    void shouldObtainNextPermutation4() {
+
+        int[] actualNums = nextPermutation.obtainNextPermutation(new int[]{4, 8, 5, 2});
+
+        assertThat(actualNums)
+                .containsExactly(5, 2, 4, 8);
+    }
 }
