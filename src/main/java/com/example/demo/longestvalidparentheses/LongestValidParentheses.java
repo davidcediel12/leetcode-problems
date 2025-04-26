@@ -1,9 +1,7 @@
 package com.example.demo.longestvalidparentheses;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 
 public class LongestValidParentheses {
 
@@ -13,14 +11,14 @@ public class LongestValidParentheses {
         int maxLongestValidParentheses = 0;
         int longestValidParentheses = 0;
 
-        List<Integer> pastResults = new ArrayList<>();
+        Deque<Integer> pastResults = new ArrayDeque<>();
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '(') {
                 openParentheses.push(c);
                 if (i > 0 && s.charAt(i - 1) == '(') {
-                    pastResults.add(longestValidParentheses);
+                    pastResults.push(longestValidParentheses);
                     maxLongestValidParentheses = Math.max(longestValidParentheses, maxLongestValidParentheses);
                     longestValidParentheses = 0;
                 }
@@ -31,7 +29,7 @@ public class LongestValidParentheses {
                 openParentheses.pop();
                 longestValidParentheses += 2;
                 if (s.charAt(i - 1) == ')') {
-                    longestValidParentheses += pastResults.removeLast();
+                    longestValidParentheses += pastResults.pop();
                 }
             }
         }
