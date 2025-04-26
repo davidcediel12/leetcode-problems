@@ -21,20 +21,16 @@ public class LongestValidParentheses {
                 openParentheses.push(c);
                 if (i > 0 && s.charAt(i - 1) == '(') {
                     pastResults.add(longestValidParentheses);
-                    if(longestValidParentheses > maxLongestValidParentheses){
-                        maxLongestValidParentheses = longestValidParentheses;
-                    }
+                    maxLongestValidParentheses = Math.max(longestValidParentheses, maxLongestValidParentheses);
                     longestValidParentheses = 0;
                 }
             } else if (openParentheses.isEmpty()) {
-                if(longestValidParentheses > maxLongestValidParentheses){
-                    maxLongestValidParentheses = longestValidParentheses;
-                }
+                maxLongestValidParentheses = Math.max(longestValidParentheses, maxLongestValidParentheses);
                 longestValidParentheses = 0;
             } else {
                 openParentheses.pop();
                 longestValidParentheses += 2;
-                if (i > 0 && s.charAt(i - 1) == ')'){
+                if (s.charAt(i - 1) == ')') {
                     longestValidParentheses += pastResults.removeLast();
                 }
             }
