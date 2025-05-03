@@ -1,11 +1,10 @@
 package com.example.demo.sudokusolver;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SudokuSolver {
+
+    boolean complete = false;
 
     public void solveSudoku(char[][] board) {
         List<List<Set<Character>>> subBoxes = new ArrayList<>();
@@ -40,12 +39,16 @@ public class SudokuSolver {
                                Set<Character> possibleChars, int row, int col) {
 
 
-        if(col >= board.length){
+        if (col >= board.length) {
             col = 0;
             row++;
         }
 
-        if(row >= board.length){
+        if (row == 8) {
+            System.out.println("row: " + row + " col: " + col);
+        }
+        if (row >= board.length) {
+            complete = true;
             return;
         }
 
@@ -65,19 +68,35 @@ public class SudokuSolver {
                         !existentColChars.contains(c) &&
                         !existentSubBoxChars.contains(c)) {
 
-                    board[row][col] = character;
-                    var newRows = new ArrayList<>(rows);
+                    char[][] newBoard = Arrays.stream(board).map(char[]::clone).toArray(char[][]::new);
+                    newBoard[row][col] = c;
+
+                    List<Set<Character>> newRows = new ArrayList<>();
+
+                    rows.forEach(eachRow -> newRows.add(new HashSet<>(eachRow)));
+
                     newRows.get(row).add(c);
 
-                    var newCols = new ArrayList<>(cols);
+                    List<Set<Character>> newCols = new ArrayList<>();
+
+                    cols.forEach(eachCol -> newCols.add(new HashSet<>(eachCol)));
+
                     newCols.get(col).add(c);
 
                     var newSubBoxes = new ArrayList<>(subBoxes);
                     newSubBoxes.get(rowSubBox).get(colSubBox).add(c);
 
-                    completeSudoku(board, rows, cols, subBoxes, possibleChars, row, col+1);
+                    completeSudoku(newBoard, newRows, newCols, newSubBoxes, possibleChars, row, col + 1);
+                    if (complete) {
+                        return;
+                    }
+                    if(row ==8){
+                        System.out.println("almost complete");
+                    }
                 }
             }
+        } else {
+            completeSudoku(board, rows, cols, subBoxes, possibleChars, row, col + 1);
         }
     }
 }
