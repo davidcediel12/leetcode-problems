@@ -17,11 +17,11 @@ public class ValidSudoku {
             subBoxes.add(rowSubBoxes);
         }
 
-        List<Set<Character>> rows = new ArrayList<>(9);
+        List<Set<Character>> rows = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             rows.add(new HashSet<>());
         }
-        List<Set<Character>> cols = new ArrayList<>(9);
+        List<Set<Character>> cols = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             cols.add(new HashSet<>());
         }
@@ -55,6 +55,5 @@ public class ValidSudoku {
             }
         }
         return true;
-
     }
 }
