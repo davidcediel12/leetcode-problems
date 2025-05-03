@@ -1,11 +1,21 @@
 package com.example.demo.validsudoku;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ValidSudoku {
 
     public boolean isValidSudoku(char[][] board) {
-        Map<String, Set<Character>> subBoxes = HashMap.newHashMap(9);
+        List<List<Set<Character>>> subBoxes = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            List<Set<Character>> rowSubBoxes = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                rowSubBoxes.add(new HashSet<>());
+            }
+            subBoxes.add(rowSubBoxes);
+        }
 
         List<Set<Character>> rows = new ArrayList<>(9);
         for (int i = 0; i < 9; i++) {
@@ -36,21 +46,15 @@ public class ValidSudoku {
                 }
                 cols.get(col).add(character);
 
-                String key = obtainSubBox(row, col);
-
-                subBoxes.putIfAbsent(key, new HashSet<>());
-                System.out.println("char: " + character + " row: " + row + " col: " + col + " subBox: " + key);
-                if (subBoxes.get(key).contains(character)) {
+                int rowSubBox = row / 3;
+                int colSubBox = col / 3;
+                if (subBoxes.get(rowSubBox).get(colSubBox).contains(character)) {
                     return false;
                 }
-                subBoxes.get(key).add(character);
+                subBoxes.get(rowSubBox).get(colSubBox).add(character);
             }
         }
         return true;
 
-    }
-
-    private String obtainSubBox(int row, int col) {
-        return (row / 3) + ":" + (col / 3);
     }
 }
