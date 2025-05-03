@@ -9,21 +9,21 @@ public class ValidSudoku {
 
     public boolean isValidSudoku(char[][] board) {
         List<List<Set<Character>>> subBoxes = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            List<Set<Character>> rowSubBoxes = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                rowSubBoxes.add(new HashSet<>());
-            }
-            subBoxes.add(rowSubBoxes);
-        }
-
         List<Set<Character>> rows = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            rows.add(new HashSet<>());
-        }
         List<Set<Character>> cols = new ArrayList<>();
+
+        List<Set<Character>> rowSubBoxes = new ArrayList<>();
+
         for (int i = 0; i < 9; i++) {
             cols.add(new HashSet<>());
+            rows.add(new HashSet<>());
+            rowSubBoxes.add(new HashSet<>());
+
+            if((i + 1) % 3 == 0){
+                subBoxes.add(rowSubBoxes);
+                rowSubBoxes = new ArrayList<>();
+            }
+
         }
 
         for (int row = 0; row < board.length; row++) {
