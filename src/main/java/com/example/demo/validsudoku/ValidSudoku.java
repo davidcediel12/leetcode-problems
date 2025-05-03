@@ -6,18 +6,18 @@ public class ValidSudoku {
 
     public boolean isValidSudoku(char[][] board) {
         Map<String, Set<Character>> subBoxes = HashMap.newHashMap(9);
+
         List<Set<Character>> rows = new ArrayList<>(9);
+        for (int i = 0; i < 9; i++) {
+            rows.add(new HashSet<>());
+        }
         List<Set<Character>> cols = new ArrayList<>(9);
+        for (int i = 0; i < 9; i++) {
+            cols.add(new HashSet<>());
+        }
 
         for (int row = 0; row < board.length; row++) {
-            if (rows.size() <= row + 1) {
-                rows.add(new HashSet<>());
-            }
             for (int col = 0; col < board[row].length; col++) {
-
-                if (cols.size() <= col + 1) {
-                    cols.add(new HashSet<>());
-                }
 
                 char character = board[row][col];
 
@@ -39,6 +39,7 @@ public class ValidSudoku {
                 String key = obtainSubBox(row, col);
 
                 subBoxes.putIfAbsent(key, new HashSet<>());
+                System.out.println("char: " + character + " row: " + row + " col: " + col + " subBox: " + key);
                 if (subBoxes.get(key).contains(character)) {
                     return false;
                 }
