@@ -6,7 +6,7 @@ import java.util.List;
 public class FirstLastPositionSortedArray {
     public int[] searchRange(int[] nums, int target) {
 
-        List<Integer> result = searchNumbers(Arrays.stream(nums).boxed().toList(),
+        List<Integer> result = searchNumbers(nums,
                 target, Integer.MAX_VALUE, Integer.MIN_VALUE, 0, nums.length - 1);
         return new int[]{
                 result.getFirst() != Integer.MAX_VALUE ? result.getFirst() : -1,
@@ -15,21 +15,21 @@ public class FirstLastPositionSortedArray {
     }
 
 
-    private List<Integer> searchNumbers(List<Integer> nums, int target, int minPosition, int maxPosition, int init, int end) {
-        if(nums.isEmpty()){
+    private List<Integer> searchNumbers(int[] nums, int target, int minPosition, int maxPosition, int init, int end) {
+        if(nums.length == 0){
             return List.of(minPosition, maxPosition);
         }
 
-        if(nums.get(end) < target || nums.get(init) > target){
+        if(nums[end] < target || nums[init] > target){
             return List.of(minPosition, maxPosition);
         }
         if (init >= end - 1) {
-            if (nums.get(init) == target) {
+            if (nums[init] == target) {
                 minPosition = Math.min(minPosition, init);
                 maxPosition = Math.max(maxPosition, init);
             }
 
-            if (nums.get(end) == target) {
+            if (nums[end] == target) {
                 minPosition = Math.min(minPosition, end);
                 maxPosition = Math.max(maxPosition, end);
             }
@@ -37,9 +37,9 @@ public class FirstLastPositionSortedArray {
         }
         int pivot = (init + end) / 2;
         System.out.println("Iteration");
-        System.out.println("\t " + nums.subList(init, end + 1));
+        System.out.println("\t " + Arrays.stream(nums).boxed().toList().subList(init, end + 1));
         System.out.println("\t pivot: " + pivot);
-        System.out.println("\t number: " + nums.get(pivot));
+        System.out.println("\t number: " + nums[pivot]);
 
         List<Integer> left = searchNumbers(nums, target, minPosition, maxPosition, init, pivot);
         List<Integer> right = searchNumbers(nums, target, minPosition, maxPosition, pivot + 1, end);
