@@ -29,4 +29,18 @@ class SearchInsertPositionTest {
         assertEquals(4, actualIndex);
     }
 
+    @Test
+    void shouldReturnCorrectIndex4(){
+
+        int actualIndex = searchInsertPosition.searchInsert(new int[]{1, 3}, 0);
+        assertEquals(0, actualIndex);
+    }
+
+    @Test
+    void shouldReturnCorrectIndex5(){
+
+        int actualIndex = searchInsertPosition.searchInsert(new int[]{1, 3}, 2);
+        assertEquals(1, actualIndex);
+    }
+
 }

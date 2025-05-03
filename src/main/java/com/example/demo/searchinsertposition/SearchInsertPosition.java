@@ -11,15 +11,22 @@ public class SearchInsertPosition {
 
         System.out.println("Iteration");
         System.out.println("\tinit: " + init + " end: " + end);
-        if (init == end) {
+        if (init >= end-1) {
             if (nums[init] == target) {
                 return init;
+            }
+            if(nums[end] == target){
+                return end;
             }
             if (nums[init] > target) {
                 return Math.max(0, init - 1);
             }
+            if(nums[end] < target){
+                return end + 1;
+            }
+            return end;
 
-            return init + 1;
+
         }
         int pivot = (init + end) / 2;
 
