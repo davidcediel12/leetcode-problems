@@ -1,0 +1,32 @@
+package com.example.demo.searchinsertposition;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SearchInsertPositionTest {
+
+    SearchInsertPosition searchInsertPosition = new SearchInsertPosition();
+
+    @Test
+    void shouldReturnCorrectIndex(){
+
+        int actualIndex = searchInsertPosition.searchInsert(new int[]{1,3,5,6}, 5);
+        assertEquals(2, actualIndex);
+    }
+
+    @Test
+    void shouldReturnCorrectIndex2(){
+
+        int actualIndex = searchInsertPosition.searchInsert(new int[]{1,3,5,6}, 2);
+        assertEquals(1, actualIndex);
+    }
+
+    @Test
+    void shouldReturnCorrectIndex3(){
+
+        int actualIndex = searchInsertPosition.searchInsert(new int[]{1,3,5,6}, 7);
+        assertEquals(4, actualIndex);
+    }
+
+}
