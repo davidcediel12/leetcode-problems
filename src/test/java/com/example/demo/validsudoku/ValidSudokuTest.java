@@ -46,4 +46,23 @@ class ValidSudokuTest {
         assertFalse(validator.isValidSudoku(sudoku));
     }
 
+
+    @Test
+    void shouldValidateCorrectly3() {
+
+        char[][] sudoku = new char[][]{
+                new char[]{'.', '.', '.', '.', '5', '.', '.', '1', '.'},
+                new char[]{'.', '4', '.', '3', '.', '.', '.', '.', '.'},
+                new char[]{'.', '.', '.', '.', '.', '3', '.', '.', '1'},
+                new char[]{'8', '.', '.', '.', '.', '.', '.', '2', '.'},
+                new char[]{'.', '.', '2', '.', '7', '.', '.', '.', '.'},
+                new char[]{'.', '1', '5', '.', '.', '.', '.', '.', '.'},
+                new char[]{'.', '.', '.', '.', '.', '2', '.', '.', '.'},
+                new char[]{'.', '2', '.', '9', '.', '.', '.', '.', '.'},
+                new char[]{'.', '.', '4', '.', '.', '.', '.', '.', '.'}
+        };
+
+        assertFalse(validator.isValidSudoku(sudoku));
+    }
+
 }

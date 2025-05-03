@@ -42,6 +42,7 @@ public class ValidSudoku {
                 if (subBoxes.get(key).contains(character)) {
                     return false;
                 }
+                subBoxes.get(key).add(character);
             }
         }
         return true;
