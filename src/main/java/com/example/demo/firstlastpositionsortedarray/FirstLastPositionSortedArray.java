@@ -19,6 +19,10 @@ public class FirstLastPositionSortedArray {
         if(nums.isEmpty()){
             return List.of(minPosition, maxPosition);
         }
+
+        if(nums.get(end) < target || nums.get(init) > target){
+            return List.of(minPosition, maxPosition);
+        }
         if (init >= end - 1) {
             if (nums.get(init) == target) {
                 minPosition = Math.min(minPosition, init);
