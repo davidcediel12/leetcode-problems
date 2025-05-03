@@ -47,6 +47,9 @@ public class SudokuSolver {
         if (row == 8) {
             System.out.println("row: " + row + " col: " + col);
         }
+        if(row ==8 && col ==8){
+            System.out.println("great!");
+        }
         if (row >= board.length) {
             complete = true;
             return;
@@ -61,42 +64,48 @@ public class SudokuSolver {
         int colSubBox = col / 3;
         Set<Character> existentSubBoxChars = subBoxes.get(rowSubBox).get(colSubBox);
 
+        Set<Character> charsToChoose;
         if (character == '.') {
+            charsToChoose = possibleChars;
+        } else {
+            charsToChoose = Set.of(character);
+        }
+        for (char c : charsToChoose) {
+            if (!existentRowChars.contains(c) &&
+                    !existentColChars.contains(c) &&
+                    !existentSubBoxChars.contains(c)) {
 
-            for (char c : possibleChars) {
-                if (!existentRowChars.contains(c) &&
-                        !existentColChars.contains(c) &&
-                        !existentSubBoxChars.contains(c)) {
+                char[][] newBoard = Arrays.stream(board).map(char[]::clone).toArray(char[][]::new);
+                newBoard[row][col] = c;
 
-                    char[][] newBoard = Arrays.stream(board).map(char[]::clone).toArray(char[][]::new);
-                    newBoard[row][col] = c;
+                List<Set<Character>> newRows = new ArrayList<>();
 
-                    List<Set<Character>> newRows = new ArrayList<>();
+                rows.forEach(eachRow -> newRows.add(new HashSet<>(eachRow)));
 
-                    rows.forEach(eachRow -> newRows.add(new HashSet<>(eachRow)));
+                newRows.get(row).add(c);
 
-                    newRows.get(row).add(c);
+                List<Set<Character>> newCols = new ArrayList<>();
 
-                    List<Set<Character>> newCols = new ArrayList<>();
+                cols.forEach(eachCol -> newCols.add(new HashSet<>(eachCol)));
 
-                    cols.forEach(eachCol -> newCols.add(new HashSet<>(eachCol)));
+                newCols.get(col).add(c);
 
-                    newCols.get(col).add(c);
+                List<List<Set<Character>>> newSubBoxes = new ArrayList<>();
+                subBoxes.forEach(rowSubBoxes -> {
+                    List<Set<Character>> newSubBox = new ArrayList<>();
+                    rowSubBoxes.forEach(subBox -> newSubBox.add(new HashSet<>(subBox)));
+                    newSubBoxes.add(new ArrayList<>(newSubBox));
+                });
+                newSubBoxes.get(rowSubBox).get(colSubBox).add(c);
 
-                    var newSubBoxes = new ArrayList<>(subBoxes);
-                    newSubBoxes.get(rowSubBox).get(colSubBox).add(c);
-
-                    completeSudoku(newBoard, newRows, newCols, newSubBoxes, possibleChars, row, col + 1);
-                    if (complete) {
-                        return;
-                    }
-                    if(row ==8){
-                        System.out.println("almost complete");
-                    }
+                completeSudoku(newBoard, newRows, newCols, newSubBoxes, possibleChars, row, col + 1);
+                if (complete) {
+                    return;
+                }
+                if (row == 8) {
+                    System.out.println("almost complete");
                 }
             }
-        } else {
-            completeSudoku(board, rows, cols, subBoxes, possibleChars, row, col + 1);
         }
     }
 }
