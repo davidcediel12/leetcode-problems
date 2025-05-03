@@ -1,27 +1,28 @@
 package com.example.demo.firstlastpositionsortedarray;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class FirstLastPositionSortedArray {
+
+    int maxPosition = Integer.MIN_VALUE;
+    int minPosition = Integer.MAX_VALUE;
+
     public int[] searchRange(int[] nums, int target) {
 
-        List<Integer> result = searchNumbers(nums,
-                target, Integer.MAX_VALUE, Integer.MIN_VALUE, 0, nums.length - 1);
+        searchNumbers(nums, target, 0, nums.length - 1);
+
         return new int[]{
-                result.getFirst() != Integer.MAX_VALUE ? result.getFirst() : -1,
-                result.getLast() != Integer.MIN_VALUE ? result.getLast() : -1
+                minPosition != Integer.MAX_VALUE ? minPosition : -1,
+                maxPosition != Integer.MIN_VALUE ? maxPosition : -1
         };
     }
 
 
-    private List<Integer> searchNumbers(int[] nums, int target, int minPosition, int maxPosition, int init, int end) {
-        if(nums.length == 0){
-            return List.of(minPosition, maxPosition);
+    private void searchNumbers(int[] nums, int target, int init, int end) {
+        if (nums.length == 0) {
+            return;
         }
 
-        if(nums[end] < target || nums[init] > target){
-            return List.of(minPosition, maxPosition);
+        if (nums[end] < target || nums[init] > target) {
+            return;
         }
         if (init >= end - 1) {
             if (nums[init] == target) {
@@ -33,23 +34,12 @@ public class FirstLastPositionSortedArray {
                 minPosition = Math.min(minPosition, end);
                 maxPosition = Math.max(maxPosition, end);
             }
-            return List.of(minPosition, maxPosition);
+            return;
         }
         int pivot = (init + end) / 2;
-        System.out.println("Iteration");
-        System.out.println("\t " + Arrays.stream(nums).boxed().toList().subList(init, end + 1));
-        System.out.println("\t pivot: " + pivot);
-        System.out.println("\t number: " + nums[pivot]);
 
-        List<Integer> left = searchNumbers(nums, target, minPosition, maxPosition, init, pivot);
-        List<Integer> right = searchNumbers(nums, target, minPosition, maxPosition, pivot + 1, end);
-
-        System.out.println("\t Left: " + left);
-        System.out.println("\t Right: " + right);
-        return List.of(
-                Math.min(left.getFirst(), right.getFirst()),
-                Math.max(left.getLast(), right.getLast())
-        );
+        searchNumbers(nums, target, init, pivot);
+        searchNumbers(nums, target, pivot + 1, end);
     }
 
 }
