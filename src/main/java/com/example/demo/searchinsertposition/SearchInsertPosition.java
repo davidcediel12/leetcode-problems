@@ -9,8 +9,13 @@ public class SearchInsertPosition {
 
     public int binarySearch(int[] nums, int target, int init, int end) {
 
-        System.out.println("Iteration");
-        System.out.println("\tinit: " + init + " end: " + end);
+        if(init == end){
+            if(nums[init] >= target){
+                return init;
+            }
+            return init + 1;
+        }
+
         if (init >= end-1) {
             if (nums[init] == target) {
                 return init;
@@ -19,7 +24,7 @@ public class SearchInsertPosition {
                 return end;
             }
             if (nums[init] > target) {
-                return Math.max(0, init - 1);
+                return init;
             }
             if(nums[end] < target){
                 return end + 1;
@@ -32,7 +37,6 @@ public class SearchInsertPosition {
 
         int pivotNumber = nums[pivot];
 
-        System.out.println("\tpivot: " + pivot + " pivotNumber: " + pivotNumber);
         if (pivotNumber == target) {
             return pivot;
         }
