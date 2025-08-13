@@ -2,7 +2,7 @@ package com.example.demo.sudokusolver;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SudokuSolverTest {
 
@@ -24,7 +24,7 @@ class SudokuSolverTest {
                 new char[]{'.', '.', '.', '.', '8', '.', '.', '7', '9'}
         };
 
-        char[][] solution = new char[][]{
+        char[][] expectedSolution = new char[][]{
                 new char[]{'5', '3', '4', '6', '7', '8', '9', '1', '2'},
                 new char[]{'6', '7', '2', '1', '9', '5', '3', '4', '8'},
                 new char[]{'1', '9', '8', '3', '4', '2', '5', '6', '7'},
@@ -36,7 +36,9 @@ class SudokuSolverTest {
                 new char[]{'3', '4', '5', '2', '8', '6', '1', '7', '9'}
         };
 
-        sudokuSolver.solveSudoku(board);
+        var actualSolution = sudokuSolver.getSudokuSolution(board);
+        assertThat(actualSolution)
+                .isDeepEqualTo(expectedSolution);
 
     }
 
