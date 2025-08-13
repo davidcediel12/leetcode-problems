@@ -9,10 +9,7 @@ public class SudokuSolver {
     char[][] finalBoard;
 
     public void solveSudoku(char[][] board) {
-        board = getSudokuSolution(board);
-    }
 
-    public char[][] getSudokuSolution(char[][] board) {
         List<List<Set<Character>>> subBoxes = new ArrayList<>();
         List<Set<Character>> rows = new ArrayList<>();
 
@@ -53,7 +50,7 @@ public class SudokuSolver {
         }
         completeSudoku(board, rows, cols, subBoxes, possibleChars, 0, 0);
         board = finalBoard;
-        return board;
+        System.out.println(Arrays.deepToString(board));
     }
 
 
@@ -88,39 +85,26 @@ public class SudokuSolver {
         if (character != '.') {
             completeSudoku(board, rows, cols, subBoxes, possibleChars, row, col + 1);
         } else {
+
             for (char c : possibleChars) {
                 if (!existentRowChars.contains(c) &&
                         !existentColChars.contains(c) &&
                         !existentSubBoxChars.contains(c)) {
 
-                    char[][] newBoard = Arrays.stream(board).map(char[]::clone).toArray(char[][]::new);
-                    newBoard[row][col] = c;
-
-                    List<Set<Character>> newRows = new ArrayList<>();
-
-                    rows.forEach(eachRow -> newRows.add(new HashSet<>(eachRow)));
-
-                    newRows.get(row).add(c);
-
-                    List<Set<Character>> newCols = new ArrayList<>();
-
-                    cols.forEach(eachCol -> newCols.add(new HashSet<>(eachCol)));
-
-                    newCols.get(col).add(c);
-
-                    List<List<Set<Character>>> newSubBoxes = new ArrayList<>();
-                    subBoxes.forEach(rowSubBoxes -> {
-                        List<Set<Character>> newSubBox = new ArrayList<>();
-                        rowSubBoxes.forEach(subBox -> newSubBox.add(new HashSet<>(subBox)));
-                        newSubBoxes.add(new ArrayList<>(newSubBox));
-                    });
-                    newSubBoxes.get(rowSubBox).get(colSubBox).add(c);
-
-                    completeSudoku(newBoard, newRows, newCols, newSubBoxes, possibleChars, row, col + 1);
+                    board[row][col] = c;
+                    existentColChars.add(c);
+                    existentRowChars.add(c);
+                    subBoxes.get(rowSubBox).get(colSubBox).add(c);
+                    completeSudoku(board, rows, cols, subBoxes, possibleChars, row, col + 1);
 
                     if (complete) {
                         return;
                     }
+
+                    board[row][col] = '.';
+                    rows.get(row).remove(c);
+                    cols.get(col).remove(c);
+                    subBoxes.get(rowSubBox).get(colSubBox).remove(c);
                 }
             }
         }

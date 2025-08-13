@@ -36,8 +36,8 @@ class SudokuSolverTest {
                 new char[]{'3', '4', '5', '2', '8', '6', '1', '7', '9'}
         };
 
-        var actualSolution = sudokuSolver.getSudokuSolution(board);
-        assertThat(actualSolution)
+        sudokuSolver.solveSudoku(board);
+        assertThat(sudokuSolver.finalBoard)
                 .isDeepEqualTo(expectedSolution);
 
     }
