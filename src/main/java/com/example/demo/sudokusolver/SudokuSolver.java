@@ -9,28 +9,46 @@ public class SudokuSolver {
     public void solveSudoku(char[][] board) {
         List<List<Set<Character>>> subBoxes = new ArrayList<>();
         List<Set<Character>> rows = new ArrayList<>();
-        List<Set<Character>> cols = new ArrayList<>();
 
+        List<Set<Character>> cols = new ArrayList<>(9);
         List<Set<Character>> rowSubBoxes = new ArrayList<>();
 
-        Set<Character> possibleChars = Set.of('1', '2', '3', '4', '5', '6', '7', '8', '9');
-
-        for (int i = 0; i < 9; i++) {
+        int subBoxCount = 0;
+        for(int i = 0; i < 9; i++){
             cols.add(new HashSet<>());
-            rows.add(new HashSet<>());
-            rowSubBoxes.add(new HashSet<>());
 
-            if ((i + 1) % 3 == 0) {
+
+            rowSubBoxes.add(new HashSet<>());
+            subBoxCount++;
+            if(subBoxCount >= 3){
                 subBoxes.add(rowSubBoxes);
                 rowSubBoxes = new ArrayList<>();
+                subBoxCount = 0;
             }
         }
 
+
+        Set<Character> possibleChars = Set.of('1', '2', '3', '4', '5', '6', '7', '8', '9');
+
+        for (int rowIndex = 0; rowIndex < 9; rowIndex++) {
+            HashSet<Character> row = new HashSet<>();
+            for(int colIndex = 0; colIndex < 9; colIndex++){
+                char c = board[rowIndex][colIndex];
+
+                cols.get(colIndex).add(c);
+                row.add(c);
+
+                int rowSubBox = rowIndex / 3;
+                int colSubBox = colIndex / 3;
+                subBoxes.get(rowSubBox).get(colSubBox).add(c);
+            }
+            rows.add(row);
+
+        }
         completeSudoku(board, rows, cols, subBoxes, possibleChars, 0, 0);
-
-
+        System.out.println("End!");
     }
-
+    // TODO Initialize existent numbers in board before starting and do not validate if the character already exists
 
     public void completeSudoku(char[][] board,
                                List<Set<Character>> rows,
@@ -47,7 +65,7 @@ public class SudokuSolver {
         if (row == 8) {
             System.out.println("row: " + row + " col: " + col);
         }
-        if(row ==8 && col ==8){
+        if (row == 8 && col == 8) {
             System.out.println("great!");
         }
         if (row >= board.length) {
@@ -64,13 +82,11 @@ public class SudokuSolver {
         int colSubBox = col / 3;
         Set<Character> existentSubBoxChars = subBoxes.get(rowSubBox).get(colSubBox);
 
-        Set<Character> charsToChoose;
-        if (character == '.') {
-            charsToChoose = possibleChars;
-        } else {
-            charsToChoose = Set.of(character);
+
+        if (character != '.') {
+            completeSudoku(board, rows, cols, subBoxes, possibleChars, row, col + 1);
         }
-        for (char c : charsToChoose) {
+        for (char c : possibleChars) {
             if (!existentRowChars.contains(c) &&
                     !existentColChars.contains(c) &&
                     !existentSubBoxChars.contains(c)) {
