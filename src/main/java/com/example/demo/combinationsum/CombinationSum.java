@@ -19,20 +19,20 @@ public class CombinationSum {
                                 List<Integer> option,
                                 List<List<Integer>> options) {
 
-        if (start == candidates.length || actualNumber > target) {
+        if (actualNumber > target) {
             return;
         }
 
 
         if (actualNumber == target) {
-            options.add(option);
+            options.add(new ArrayList<>(option));
             return;
         }
 
         for (int i = start; i < candidates.length; i++) {
-            var option1 = new ArrayList<>(option);
-            option1.add(candidates[i]);
-            combinationSum(candidates, target, actualNumber + candidates[i], i, option1, options);
+            option.add(candidates[i]);
+            combinationSum(candidates, target, actualNumber + candidates[i], i, option, options);
+            option.removeLast();
         }
     }
 }
