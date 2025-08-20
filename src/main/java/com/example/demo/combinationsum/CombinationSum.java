@@ -15,11 +15,11 @@ public class CombinationSum {
     }
 
 
-    private void combinationSum(int[] candidates, int target, int actualNumber, int i,
+    private void combinationSum(int[] candidates, int target, int actualNumber, int start,
                                 List<Integer> option,
                                 List<List<Integer>> options) {
 
-        if (i == candidates.length || actualNumber > target) {
+        if (start == candidates.length || actualNumber > target) {
             return;
         }
 
@@ -29,10 +29,10 @@ public class CombinationSum {
             return;
         }
 
-        for (int j = i; j < candidates.length; j++) {
+        for (int i = start; i < candidates.length; i++) {
             var option1 = new ArrayList<>(option);
-            option1.add(candidates[j]);
-            combinationSum(candidates, target, actualNumber + candidates[j], j, option1, options);
+            option1.add(candidates[i]);
+            combinationSum(candidates, target, actualNumber + candidates[i], i, option1, options);
         }
     }
 }
