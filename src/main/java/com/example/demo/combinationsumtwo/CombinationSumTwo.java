@@ -4,6 +4,7 @@ import java.util.*;
 
 public class CombinationSumTwo {
 
+    Set<List<Integer>> analyzedOptions = new HashSet<>();
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
 
@@ -28,7 +29,10 @@ public class CombinationSumTwo {
 
         for (int i = start; i < candidates.length; i++) {
             currentOption.add(candidates[i]);
-            combinationSum2(candidates, target - candidates[i], i + 1, currentOption, options);
+            if(!analyzedOptions.contains(currentOption)) {
+                analyzedOptions.add(new ArrayList<>(currentOption));
+                combinationSum2(candidates, target - candidates[i], i + 1, currentOption, options);
+            }
             currentOption.removeLast();
         }
 
