@@ -21,8 +21,13 @@ class FirstMissingPositiveTest {
     }
 
     @Test
-    void shouldReturn1(){
-        assertEquals(1, firstMissingPositive.firstMissingPositive(new int[]{7, 8, 9, 11, 12}));
+    void shouldReturn2WhenJustOneIsPresent(){
+        assertEquals(2, firstMissingPositive.firstMissingPositive(new int[]{1}));
+    }
+
+    @Test
+    void shouldReturn2WhenJustOneIsPresentTwice(){
+        assertEquals(2, firstMissingPositive.firstMissingPositive(new int[]{1, 1}));
     }
 
 
