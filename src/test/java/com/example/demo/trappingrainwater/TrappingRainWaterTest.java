@@ -27,4 +27,14 @@ class TrappingRainWaterTest {
         assertEquals(6, actualWater);
 
     }
+
+
+    @Test
+    void shouldCalculateTrappingWaterCorrectly3(){
+
+        int actualWater = trappingRainWater.trap(new int[]{2, 0, 2});
+
+        assertEquals(2, actualWater);
+
+    }
 }

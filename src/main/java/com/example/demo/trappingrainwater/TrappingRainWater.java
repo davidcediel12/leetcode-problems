@@ -11,15 +11,26 @@ public class TrappingRainWater {
         int leftWallHeight = -1;
 
         int water = 0;
-        List<Integer> heights = Arrays.stream(height).boxed().toList();
+
+        int maxHeight = Integer.MIN_VALUE;
+        int maxHeightIndex = 0;
 
         for (int i = 0; i < height.length; i++) {
-            int actualHeight = height[i];
+            if(height[i] > maxHeight){
+                maxHeight = height[i];
+                maxHeightIndex = i;
+            }
+        }
 
-            if (actualHeight > leftWallHeight) {
+        List<Integer> leftHeights = Arrays.stream(height).boxed().toList().subList(0, maxHeightIndex+1);
+
+        for (int i = 0; i < leftHeights.size(); i++) {
+            int actualHeight = leftHeights.get(i);
+
+            if (actualHeight > leftWallHeight || actualHeight == maxHeight) {
 
                 if (leftWallHeight > 0) {
-                    water += calculateWater(heights, i, leftWallIndex);
+                    water += calculateWater(leftHeights, i, leftWallIndex);
                 }
                 leftWallHeight = actualHeight;
                 leftWallIndex = i;
@@ -27,16 +38,19 @@ public class TrappingRainWater {
             }
         }
 
+
+        List<Integer> rightHeights = Arrays.stream(height).boxed().toList().subList(maxHeightIndex, height.length);
+
         int rightWallIndex = -1;
         int rightWallHeight = -1;
 
-        for (int i = height.length - 1; i >= 0; i--) {
-            int actualHeight = height[i];
+        for (int i = rightHeights.size() - 1; i >= 0; i--) {
+            int actualHeight = rightHeights.get(i);
 
-            if (actualHeight > rightWallHeight) {
+            if (actualHeight > rightWallHeight || actualHeight == maxHeight) {
 
                 if (rightWallHeight > 0) {
-                    water += calculateWaterReverseOrder(heights, i, rightWallIndex);
+                    water += calculateWaterReverseOrder(rightHeights, i, rightWallIndex);
                 }
                 rightWallHeight = actualHeight;
                 rightWallIndex = i;
