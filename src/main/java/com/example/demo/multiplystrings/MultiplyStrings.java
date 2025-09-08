@@ -1,22 +1,21 @@
 package com.example.demo.multiplystrings;
 
-import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Map;
 
 public class MultiplyStrings {
 
-
-    Map<Character, Long> numbers = Map.of(
-            '0', 0L,
-            '1', 1L,
-            '2', 2L,
-            '3', 3L,
-            '4', 4L,
-            '5', 5L,
-            '6', 6L,
-            '7', 7L,
-            '8', 8L,
-            '9', 9L
+    Map<Character, Integer> numbers = Map.of(
+            '0', 0,
+            '1', 1,
+            '2', 2,
+            '3', 3,
+            '4', 4,
+            '5', 5,
+            '6', 6,
+            '7', 7,
+            '8', 8,
+            '9', 9
     );
 
     Map<Long, Character> reversedNumbers = Map.of(
@@ -35,37 +34,40 @@ public class MultiplyStrings {
 
     public String multiply(String num1, String num2) {
 
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
 
-        BigDecimal result = BigDecimal.valueOf(transform(num1)) .multiply(BigDecimal.valueOf(transform(num2)));
+        int[] digits = new int[num1.length() + num2.length()];
+
+        int carry = 0;
+        for (int i = num1.length() - 1; i >= 0; i--) {
+
+            for (int j = num2.length() - 1; j >= 0; j--) {
+
+                int result = numbers.get(num1.charAt(i)) * numbers.get(num2.charAt(j));
+
+                digits[i + j + 1] += result + carry;
+
+                digits[i + j + 1] = digits[i + j + 1] % 10;
+
+                carry = digits[i + j + 1] / 10;
+            }
+
+        }
+
+        if(carry > 0) {
+            digits[0] = digits[0] + carry;
+        }
 
         StringBuilder sb = new StringBuilder();
+        Arrays.stream(digits)
+                .forEach(sb::append);
 
-        while (result.compareTo(BigDecimal.TEN) >= 0){
-            BigDecimal[] divideAndRemainder = result.divideAndRemainder(BigDecimal.TEN);
-            sb.insert(0, divideAndRemainder[1].intValue());
-            result = divideAndRemainder[0];
-        }
-        if(result.compareTo(BigDecimal.ZERO) > 0) {
-            sb.insert(0, result.intValue());
+
+        if(sb.charAt(0) == '0'){
+            sb.deleteCharAt(0);
         }
         return sb.toString();
-
-    }
-
-
-    private Double transform(String num){
-
-        int count = 0;
-        Double transformedNum = 0D;
-
-        for (int i = num.length() - 1; i >= 0; i--) {
-
-            Character c = num.charAt(i);
-            Long digit = numbers.get(c);
-            transformedNum += digit *  Math.pow(10, count);
-            count++;
-        }
-
-        return transformedNum;
     }
 }
