@@ -18,19 +18,6 @@ public class MultiplyStrings {
             '9', 9
     );
 
-    Map<Long, Character> reversedNumbers = Map.of(
-            0L, '0',
-            1L, '1',
-            2L, '2',
-            3L, '3',
-            4L, '4',
-            5L, '5',
-            6L, '6',
-            7L, '7',
-            8L, '8',
-            9L, '9'
-    );
-
 
     public String multiply(String num1, String num2) {
 
