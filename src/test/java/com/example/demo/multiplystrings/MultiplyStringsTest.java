@@ -29,4 +29,11 @@ class MultiplyStringsTest {
 
         assertEquals("56088", multiplyStrings.multiply("123", "456"));
     }
+
+    @Test
+    void shouldMultiplyCorrectly4(){
+
+        assertEquals("419254329864656431168468",
+                multiplyStrings.multiply("498828660196", "840477629533"));
+    }
 }

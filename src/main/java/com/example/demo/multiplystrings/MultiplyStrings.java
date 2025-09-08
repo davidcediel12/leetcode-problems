@@ -1,5 +1,6 @@
 package com.example.demo.multiplystrings;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class MultiplyStrings {
@@ -35,30 +36,33 @@ public class MultiplyStrings {
     public String multiply(String num1, String num2) {
 
 
-        Long result = transform(num1) * transform(num2);
+        BigDecimal result = BigDecimal.valueOf(transform(num1)) .multiply(BigDecimal.valueOf(transform(num2)));
 
         StringBuilder sb = new StringBuilder();
 
-        while (result / 10 > 0){
-            sb.insert(0, result % 10);
-            result = result / 10;
+        while (result.compareTo(BigDecimal.TEN) >= 0){
+            BigDecimal[] divideAndRemainder = result.divideAndRemainder(BigDecimal.TEN);
+            sb.insert(0, divideAndRemainder[1].intValue());
+            result = divideAndRemainder[0];
         }
-        sb.insert(0, result);
+        if(result.compareTo(BigDecimal.ZERO) > 0) {
+            sb.insert(0, result.intValue());
+        }
         return sb.toString();
 
     }
 
 
-    private Long transform(String num){
+    private Double transform(String num){
 
         int count = 0;
-        Long transformedNum = 0L;
+        Double transformedNum = 0D;
 
         for (int i = num.length() - 1; i >= 0; i--) {
 
             Character c = num.charAt(i);
             Long digit = numbers.get(c);
-            transformedNum += digit * (long) Math.pow(10, count);
+            transformedNum += digit *  Math.pow(10, count);
             count++;
         }
 
