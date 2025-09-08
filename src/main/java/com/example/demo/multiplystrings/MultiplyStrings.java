@@ -40,24 +40,31 @@ public class MultiplyStrings {
 
         int[] digits = new int[num1.length() + num2.length()];
 
-        int carry = 0;
-        for (int i = num1.length() - 1; i >= 0; i--) {
 
-            for (int j = num2.length() - 1; j >= 0; j--) {
+        int[] carries = new int[num1.length() + num2.length()];
 
-                int result = numbers.get(num1.charAt(i)) * numbers.get(num2.charAt(j));
 
-                digits[i + j + 1] += result + carry;
+        for (int i = num2.length() - 1; i >= 0; i--) {
 
-                digits[i + j + 1] = digits[i + j + 1] % 10;
+            for (int j = num1.length() - 1; j >= 0; j--) {
 
-                carry = digits[i + j + 1] / 10;
+                int result = digits[i + j + 1] +
+                        numbers.get(num2.charAt(i)) * numbers.get(num1.charAt(j)) + carries[i+j+1];
+
+
+                carries[i + j + 1] = 0;
+
+
+
+                digits[i + j + 1] = result % 10;
+
+                carries[i + j] += result / 10;
             }
 
         }
 
-        if(carry > 0) {
-            digits[0] = digits[0] + carry;
+        if(carries[0] > 0) {
+            digits[0] = digits[0] + carries[0];
         }
 
         StringBuilder sb = new StringBuilder();
