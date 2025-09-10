@@ -1,6 +1,7 @@
 package com.example.demo.wildcardmatching;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -9,14 +10,14 @@ public class WildCardMatching {
 
     public boolean isMatch(String s, String p) {
 
-        Queue<Character> charQueue = new ArrayDeque<>();
+        Deque<Character> charDequeue = new ArrayDeque<>();
 
         for (int i = p.length() - 1; i >= 0; i--) {
-            charQueue.add(p.charAt(i));
+            charDequeue.push(p.charAt(i));
         }
 
 
-        return isMatch(charQueue, s);
+        return isMatch(charDequeue, s);
     }
 
 
@@ -41,12 +42,13 @@ public class WildCardMatching {
         }
 
         String newString = s.substring(1);
-        Queue<Character> newPattern = new ArrayDeque<>(pattern);
+        Deque<Character> newPattern = new ArrayDeque<>(pattern);
+        newPattern.pop();
 
         if (actualPattern.equals('*')) {
-            newPattern.poll();
 
-            return isMatch(newPattern, newString) || isMatch(pattern, newString);
+            return isMatch(newPattern, newString) || isMatch(pattern, newString) ||
+                    isMatch(newPattern, s);
         }
 
         return isMatch(newPattern, newString);

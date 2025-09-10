@@ -30,5 +30,12 @@ class WildCardMatchingTest {
     }
 
 
+    @Test
+    void shouldReturnCorrectMatch4(){
+
+        assertTrue(wildCardMatching.isMatch("adceb", "*a*b"));
+    }
+
+
 
 }
