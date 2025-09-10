@@ -59,8 +59,7 @@ public class WildCardMatching {
 
             if (actualPattern.equals('*')) {
 
-                match = isMatch(newString, newPattern) || isMatch(newString, p) ||
-                        isMatch(s, newPattern);
+                match = isMatch(newString, p) || isMatch(s, newPattern);
 
             } else {
                 match = isMatch(newString, newPattern);
