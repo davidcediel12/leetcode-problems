@@ -77,4 +77,5 @@ To view all the problems: [Problem Set](https://leetcode.com/problemset/)
   41. [First Missing Positive](src/main/java/com/example/demo/firstmissingpositive)
   42. [Trapping Rain Water](src/main/java/com/example/demo/trappingrainwater)
   43. [Multiply Strings](src/main/java/com/example/demo/multiplystrings)
+  44. [Wildcard Matching](src/main/java/com/example/demo/wildcardmatching)
 </details>
