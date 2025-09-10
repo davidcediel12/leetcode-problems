@@ -29,29 +29,72 @@ public class WildCardMatching {
             return false;
         }
 
-        Character actualPattern = p.charAt(0);
 
-        if (!matches(actualPattern, s)) {
-            addMatch(p, s, false);
-            return false;
+        int firstWildcardIdx = getFirstWildcardIdx(p);
+
+
+        String newString;
+        String newPattern;
+
+
+        if (firstWildcardIdx < 0) {
+            return p.equals(s);
         }
 
-        String newString = s.substring(1);
-        String newPattern = p.substring(1);
 
         boolean match;
-        if (actualPattern.equals('*')) {
 
-            match = isMatch(newString, newPattern) || isMatch(newString, p) ||
-                    isMatch(s, newPattern);
+        if (firstWildcardIdx == 0) {
+
+            Character actualPattern = p.charAt(0);
+
+            if (!matches(actualPattern, s)) {
+                addMatch(p, s, false);
+                return false;
+            }
+
+            newString = s.substring(1);
+            newPattern = p.substring(1);
+
+
+            if (actualPattern.equals('*')) {
+
+                match = isMatch(newString, newPattern) || isMatch(newString, p) ||
+                        isMatch(s, newPattern);
+
+            } else {
+                match = isMatch(newString, newPattern);
+            }
 
         } else {
+            if (s.length() - 1 < firstWildcardIdx ||
+                    !s.substring(0, firstWildcardIdx).equals(p.substring(0, firstWildcardIdx))) {
+                addMatch(p, s, false);
+                return false;
+            }
+            newString = s.substring(firstWildcardIdx);
+            newPattern = p.substring(firstWildcardIdx);
+
+
             match = isMatch(newString, newPattern);
         }
 
         addMatch(p, s, match);
         return match;
 
+
+    }
+
+    private static int getFirstWildcardIdx(String p) {
+        int firstWildcardIdx = p.indexOf("*");
+        int firstQuestionIdx = p.indexOf("?");
+
+        if (firstWildcardIdx < 0) {
+            firstWildcardIdx = firstQuestionIdx;
+        } else if (firstQuestionIdx >= 0) {
+            firstWildcardIdx = Math.min(firstQuestionIdx, firstWildcardIdx);
+        }
+        return firstWildcardIdx;
     }
 
     private static boolean containsJustWildCards(String pattern) {
