@@ -67,7 +67,7 @@ public class WildCardMatching {
             }
 
         } else {
-            if (s.length() - 1 < firstWildcardIdx ||
+            if (s.length()  < firstWildcardIdx ||
                     !s.substring(0, firstWildcardIdx).equals(p.substring(0, firstWildcardIdx))) {
                 addMatch(p, s, false);
                 return false;

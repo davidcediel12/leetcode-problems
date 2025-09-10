@@ -52,4 +52,13 @@ class WildCardMatchingTest {
     }
 
 
+    @Test
+    void shouldReturnCorrectMatch7() {
+
+        assertTrue(wildCardMatching.isMatch(
+                "abcabczzzde",
+                "*abc???de*"));
+    }
+
+
 }
