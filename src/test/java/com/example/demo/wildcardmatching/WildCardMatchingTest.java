@@ -36,6 +36,12 @@ class WildCardMatchingTest {
         assertTrue(wildCardMatching.isMatch("adceb", "*a*b"));
     }
 
+    @Test
+    void shouldReturnCorrectMatch5(){
+
+        assertFalse(wildCardMatching.isMatch("babaaababaabababbbbbbaabaabbabababbaababbaaabbbaaab", "***bba**a*bbba**aab**b"));
+    }
+
 
 
 }

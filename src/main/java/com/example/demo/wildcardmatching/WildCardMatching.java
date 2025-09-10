@@ -1,64 +1,61 @@
 package com.example.demo.wildcardmatching;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Queue;
 
 public class WildCardMatching {
 
+    Map<String, Boolean> pastMatches = new HashMap<>();
 
     public boolean isMatch(String s, String p) {
 
-        Deque<Character> charDequeue = new ArrayDeque<>();
-
-        for (int i = p.length() - 1; i >= 0; i--) {
-            charDequeue.push(p.charAt(i));
+        if (pastMatches.containsKey(p + "-" + s)) {
+            return pastMatches.get(p + "-" + s);
         }
 
-
-        return isMatch(charDequeue, s);
-    }
-
-
-    private boolean isMatch(Queue<Character> pattern, String s) {
-
-        if (s.isEmpty() && containsJustWildCards(pattern)) {
+        if (s.isEmpty() && containsJustWildCards(p)) {
+            addMatch(p, s, true);
             return true;
         }
 
-        if (pattern.isEmpty()) {
+        if (p.isEmpty()) {
+            addMatch(p, s, false);
             return false;
         }
 
         if (s.isEmpty()) {
+            addMatch(p, s, false);
             return false;
         }
 
-        Character actualPattern = pattern.peek();
+        Character actualPattern = p.charAt(0);
 
         if (!matches(actualPattern, s)) {
+            addMatch(p, s, false);
             return false;
         }
 
         String newString = s.substring(1);
-        Deque<Character> newPattern = new ArrayDeque<>(pattern);
-        newPattern.pop();
+        String newPattern = p.substring(1);
 
+        boolean match;
         if (actualPattern.equals('*')) {
 
-            return isMatch(newPattern, newString) || isMatch(pattern, newString) ||
-                    isMatch(newPattern, s);
+            match = isMatch(newString, newPattern) || isMatch(newString, p) ||
+                    isMatch(s, newPattern);
+
+        } else {
+            match = isMatch(newString, newPattern);
         }
 
-        return isMatch(newPattern, newString);
-
+        addMatch(p, s, match);
+        return match;
 
     }
 
-    private static boolean containsJustWildCards(Queue<Character> pattern) {
-        return pattern.stream()
-                .allMatch(c -> c.equals('*'));
+    private static boolean containsJustWildCards(String pattern) {
+        return pattern.matches("\\**");
     }
 
     private boolean matches(Character actualPattern, String s) {
@@ -66,5 +63,10 @@ public class WildCardMatching {
         return actualPattern.equals('*') ||
                 (actualPattern.equals('?') && !s.isEmpty()) ||
                 (!s.isEmpty() && Objects.equals(actualPattern, s.charAt(0)));
+    }
+
+
+    private void addMatch(String pattern, String s, boolean result) {
+        pastMatches.put(pattern + "-" + s, result);
     }
 }
