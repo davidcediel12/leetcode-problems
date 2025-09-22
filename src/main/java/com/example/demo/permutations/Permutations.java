@@ -21,6 +21,7 @@ public class Permutations {
         int i = idx;
 
         List<List<Integer>> results = new ArrayList<>();
+
         while (!traveledAllArray) {
 
             Set<Integer> newPermutation = new LinkedHashSet<>(result);
@@ -28,15 +29,11 @@ public class Permutations {
             if (newPermutation.add(nums[i])) {
 
                 var permutations = permute(nums, i, newPermutation);
-
-                permutations = permutations.stream().filter(p -> !p.isEmpty())
-                        .toList();
-
-
                 results.addAll(permutations);
             }
 
             i++;
+
             if(i >= nums.length){
                 i = 0;
             }
