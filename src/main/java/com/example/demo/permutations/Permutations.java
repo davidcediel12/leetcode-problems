@@ -24,11 +24,11 @@ public class Permutations {
 
         while (!traveledAllArray) {
 
-            Set<Integer> newPermutation = new LinkedHashSet<>(result);
-
-            if (newPermutation.add(nums[i])) {
-                permute(nums, i, newPermutation);
+            if (result.add(nums[i])) {
+                permute(nums, i, result);
+                result.remove(nums[i]);
             }
+
 
             i++;
 
