@@ -16,7 +16,6 @@ public class JumpGameTwo {
 
     private int jump(int[] nums, int actualIndex, int jumps) {
 
-
         if (jumpsByPosition.containsKey(actualIndex) && jumpsByPosition.get(actualIndex) <= jumps) {
             return jumpsByPosition.get(actualIndex);
         }
@@ -33,20 +32,29 @@ public class JumpGameTwo {
             return jumps;
         }
 
-        if (actualIndex + maxForwardJump >= nums.length) {
+        if (actualIndex + maxForwardJump >= nums.length - 1) {
             jumpsByPosition.put(actualIndex, jumps + 1);
             return jumps + 1;
         }
 
         int i = 1;
+        int maxPossibleJump = 0;
+        int positionToJump = actualIndex;
         while (i <= maxForwardJump) {
 
-            int requiredJumps = jump(nums, actualIndex + i, jumps + 1);
+            int nextJump = nums[actualIndex + i];
 
-            if (requiredJumps < this.minJump) {
-                this.minJump = requiredJumps;
+            if (i + nextJump > maxPossibleJump) {
+                maxPossibleJump = i + nextJump;
+                positionToJump = actualIndex + i;
             }
             i++;
+        }
+
+        int requiredJumps = jump(nums, positionToJump, jumps + 1);
+
+        if (requiredJumps < this.minJump) {
+            this.minJump = requiredJumps;
         }
 
         jumpsByPosition.put(actualIndex, this.minJump);
