@@ -4,32 +4,30 @@ import java.util.*;
 
 public class Permutations {
 
+    List<List<Integer>> results = new ArrayList<>();
 
     public List<List<Integer>> permute(int[] nums) {
-        return permute(nums, 0, new LinkedHashSet<>());
+        permute(nums, 0, new LinkedHashSet<>());
+        return results;
     }
 
 
-    private List<List<Integer>> permute(int[] nums, int idx, Set<Integer> result) {
+    private void permute(int[] nums, int idx, Set<Integer> result) {
 
         if (result.size() >= nums.length) {
-            return List.of(result.stream().toList());
+            results.add(result.stream().toList());
         }
 
 
         boolean traveledAllArray = false;
         int i = idx;
 
-        List<List<Integer>> results = new ArrayList<>();
-
         while (!traveledAllArray) {
 
             Set<Integer> newPermutation = new LinkedHashSet<>(result);
 
             if (newPermutation.add(nums[i])) {
-
-                var permutations = permute(nums, i, newPermutation);
-                results.addAll(permutations);
+                permute(nums, i, newPermutation);
             }
 
             i++;
@@ -39,7 +37,5 @@ public class Permutations {
             }
             traveledAllArray = i == idx;
         }
-
-        return results;
     }
 }
