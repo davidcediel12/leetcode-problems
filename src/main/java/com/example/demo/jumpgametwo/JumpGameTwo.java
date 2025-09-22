@@ -2,12 +2,19 @@ package com.example.demo.jumpgametwo;
 
 public class JumpGameTwo {
 
+    int minJump = Integer.MAX_VALUE;
+
+
     public int jump(int[] nums) {
         return jump(nums, 0, 0);
     }
 
 
     private int jump(int[] nums, int actualIndex, int jumps) {
+
+        if (jumps >= this.minJump) {
+            return jumps;
+        }
 
         int maxForwardJump = nums[actualIndex];
 
@@ -20,16 +27,15 @@ public class JumpGameTwo {
         }
 
         int i = 1;
-        int minJumps = Integer.MAX_VALUE;
         while (i <= maxForwardJump) {
 
             int requiredJumps = jump(nums, actualIndex + i, jumps + 1);
 
-            if (requiredJumps < minJumps) {
-                minJumps = requiredJumps;
+            if (requiredJumps < this.minJump) {
+                this.minJump = requiredJumps;
             }
             i++;
         }
-        return minJumps;
+        return this.minJump;
     }
 }
