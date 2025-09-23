@@ -1,24 +1,21 @@
 package com.example.demo.permutationstwo;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PermutationsTwo {
 
-    List<List<Integer>> results = new ArrayList<>();
+    Set<List<Integer>> results = new HashSet<>();
 
     public List<List<Integer>> permute(int[] nums) {
-        permute(nums, 0, new LinkedHashSet<>());
-        return results;
+        permute(nums, 0, new LinkedHashMap<>());
+        return results.stream().toList();
     }
 
 
-    private void permute(int[] nums, int idx, Set<Integer> result) {
+    private void permute(int[] nums, int idx, Map<Integer, Integer> result) {
 
         if (result.size() >= nums.length) {
-            results.add(result.stream().toList());
+            results.add(result.values().stream().toList());
         }
 
 
@@ -27,9 +24,12 @@ public class PermutationsTwo {
 
         while (!traveledAllArray) {
 
-            if (result.add(nums[i])) {
+
+            if (!result.containsKey(i)) {
+
+                result.put(i, nums[i]);
                 permute(nums, i, result);
-                result.remove(nums[i]);
+                result.remove(i);
             }
 
 
