@@ -13,7 +13,7 @@ class PermutationsTwoTest {
 
     @Test
     void shouldCreatePermutationsCorrectly() {
-        List<List<Integer>> actualPermutations = permutationsTwo.permute(new int[]{1, 1, 2});
+        List<List<Integer>> actualPermutations = permutationsTwo.permuteUnique(new int[]{1, 1, 2});
 
         assertThat(actualPermutations)
                 .usingRecursiveComparison()
@@ -28,7 +28,7 @@ class PermutationsTwoTest {
     @Test
     void shouldReturnCorrectPermutations() {
 
-        List<List<Integer>> actualPermutations = permutationsTwo.permute(new int[]{1, 2, 3});
+        List<List<Integer>> actualPermutations = permutationsTwo.permuteUnique(new int[]{1, 2, 3});
 
         assertThat(actualPermutations)
                 .usingRecursiveComparison()

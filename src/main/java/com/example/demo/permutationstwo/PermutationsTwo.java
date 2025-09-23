@@ -6,13 +6,13 @@ public class PermutationsTwo {
 
     Set<List<Integer>> results = new HashSet<>();
 
-    public List<List<Integer>> permute(int[] nums) {
-        permute(nums, 0, new LinkedHashMap<>());
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        permuteUnique(nums, 0, new LinkedHashMap<>());
         return results.stream().toList();
     }
 
 
-    private void permute(int[] nums, int idx, Map<Integer, Integer> result) {
+    private void permuteUnique(int[] nums, int idx, Map<Integer, Integer> result) {
 
         if (result.size() >= nums.length) {
             results.add(result.values().stream().toList());
@@ -28,7 +28,7 @@ public class PermutationsTwo {
             if (!result.containsKey(i)) {
 
                 result.put(i, nums[i]);
-                permute(nums, i, result);
+                permuteUnique(nums, i, result);
                 result.remove(i);
             }
 
