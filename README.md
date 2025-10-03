@@ -85,3 +85,11 @@ To view all the problems: [Problem Set](https://leetcode.com/problemset/)
   49.  [Group Anagrams](src/main/java/com/example/demo/groupanagrams)
   50.  [Pow(x, n)](src/main/java/com/example/demo/pow)
 </details>
+
+
+
+<details>
+  <summary>Problems 51 - 60</summary>
+
+  51.  [N-Queens](src/main/java/com/example/demo/nqueens)
+</details>
