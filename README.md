@@ -80,5 +80,6 @@ To view all the problems: [Problem Set](https://leetcode.com/problemset/)
   44. [Wildcard Matching](src/main/java/com/example/demo/wildcardmatching)
   45. [Jump Game II](src/main/java/com/example/demo/jumpgametwo)
   46. [Permutations](src/main/java/com/example/demo/permutations)
-  47A. [Permutations II](src/main/java/com/example/demo/permutationstwo)
+  47. [Permutations II](src/main/java/com/example/demo/permutationstwo)
+  48.  [Rotate Image](src/main/java/com/example/demo/rotateimage)
 </details>
