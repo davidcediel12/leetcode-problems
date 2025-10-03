@@ -44,4 +44,22 @@ class PowTest {
 
     }
 
+    @Test
+    void shouldCalculateThePowCorrectly6(){
+        assertEquals(0.0, pow.myPow(2.00000, -2147483648), 0.0001);
+
+    }
+
+    @Test
+    void shouldCalculateThePowCorrectly7(){
+        assertEquals(-1.0, pow.myPow(-1.00000, 2147483647), 0.0001);
+
+    }
+
+    @Test
+    void shouldCalculateThePowCorrectly8(){
+        assertEquals(1.0, pow.myPow(-1.00000, -2147483648), 0.0001);
+
+    }
+
 }

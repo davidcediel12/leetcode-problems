@@ -10,8 +10,15 @@ public class Pow {
             return 1D;
         }
 
-        if(x == 0D){
+        if(x == 0D || (n == Integer.MIN_VALUE && x != -1)){
             return 0D;
+        }
+
+        if(x == -1D){
+            if(n % 2 == 0){
+                return 1D;
+            }
+            return -1D;
         }
 
         boolean isNegative = n < 0;
