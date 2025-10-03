@@ -6,8 +6,12 @@ public class Pow {
 
         double result = 1;
 
-        if(n == 0){
+        if(n == 0 || x == 1){
             return 1D;
+        }
+
+        if(x == 0D){
+            return 0D;
         }
 
         boolean isNegative = n < 0;

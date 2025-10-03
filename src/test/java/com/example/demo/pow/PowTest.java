@@ -37,4 +37,11 @@ class PowTest {
 
     }
 
+
+    @Test
+    void shouldCalculateThePowCorrectly5(){
+        assertEquals(1.0, pow.myPow(1.0, 2147483647), 0.0001);
+
+    }
+
 }
