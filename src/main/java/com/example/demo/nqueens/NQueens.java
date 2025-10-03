@@ -7,12 +7,10 @@ import java.util.Set;
 
 public class NQueens {
 
-    private List<List<String>> solutions = new ArrayList<>();
+    private final List<List<String>> solutions = new ArrayList<>();
+    private final List<List<String>> board = new ArrayList<>();
 
     public List<List<String>> solveNQueens(int n) {
-
-        List<List<String>> board = new ArrayList<>();
-
         for (int i = 0; i < n; i++) {
             List<String> boardRow = new ArrayList<>();
             for (int j = 0; j < n; j++) {
@@ -21,14 +19,14 @@ public class NQueens {
             board.add(boardRow);
         }
 
-        nQueens(board, 0, new HashSet<>());
+        nQueens(0, new HashSet<>());
 
         return solutions;
 
     }
 
 
-    private void nQueens(List<List<String>> board, int row, Set<Integer> forbiddenCols) {
+    private void nQueens(int row, Set<Integer> forbiddenCols) {
 
         if (row >= board.size()) {
             List<String> solution = new ArrayList<>();
@@ -46,7 +44,7 @@ public class NQueens {
                 board.get(row).set(i, "Q");
 
                 if (isValidBoard(board, row, i)) {
-                    nQueens(board, row + 1, forbiddenCols);
+                    nQueens(row + 1, forbiddenCols);
                 }
 
                 board.get(row).set(i, ".");
