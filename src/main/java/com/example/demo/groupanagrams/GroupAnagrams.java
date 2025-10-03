@@ -1,7 +1,6 @@
 package com.example.demo.groupanagrams;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GroupAnagrams {
 
@@ -12,7 +11,10 @@ public class GroupAnagrams {
 
         for (String word : strs) {
 
-            String key = Arrays.stream(word.split("")).sorted().collect(Collectors.joining());
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+
+            String key = new String(chars);
 
             if (anagrams.containsKey(key)) {
                 anagrams.get(key).add(word);
