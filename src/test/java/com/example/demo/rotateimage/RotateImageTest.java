@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RotateImageTest {
 
 
-    RotateImage.InefficientSolution rotateImage = new RotateImage.InefficientSolution();
+    RotateImage rotateImage = new RotateImage();
 
 
     @Test

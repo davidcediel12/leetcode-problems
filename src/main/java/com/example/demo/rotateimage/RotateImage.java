@@ -3,6 +3,46 @@ package com.example.demo.rotateimage;
 public class RotateImage {
 
 
+    public static void main(String[] args) {
+        RotateImage rotateImage = new RotateImage();
+
+        rotateImage.rotate(new int[][]{
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6},
+                new int[]{7, 8, 9}
+        });
+    }
+
+    public void rotate(int[][] matrix) {
+
+        int size = matrix.length;
+
+        int up = 0;
+        int down = size - 1;
+
+        while (up < down) {
+
+            int[] temp = matrix[up];
+
+            matrix[up] = matrix[down];
+            matrix[down] = temp;
+
+            up++;
+            down--;
+        }
+
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) { // Iterate just in the upper triangle of the matrix
+
+                System.out.printf("Swapping [%d,%d] (%d) and [%d, %d] (%d)%n", i, j, matrix[i][j], j, i, matrix[j][i]);
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+
+
+            }
+        }
+    }
 
     static class InefficientSolution {
         public void rotate(int[][] matrix) {
