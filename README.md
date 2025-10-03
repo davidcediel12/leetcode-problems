@@ -92,4 +92,5 @@ To view all the problems: [Problem Set](https://leetcode.com/problemset/)
   <summary>Problems 51 - 60</summary>
 
   51.  [N-Queens](src/main/java/com/example/demo/nqueens)
+  51.  [N-Queens II](src/main/java/com/example/demo/nqueenstwo)
 </details>
