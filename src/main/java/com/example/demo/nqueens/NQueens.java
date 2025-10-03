@@ -1,9 +1,7 @@
 package com.example.demo.nqueens;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class NQueens {
 
@@ -19,14 +17,17 @@ public class NQueens {
             board.add(boardRow);
         }
 
-        nQueens(0, new HashSet<>());
+        boolean[] forbiddenCols = new boolean[n];
+
+
+        nQueens(0, forbiddenCols);
 
         return solutions;
 
     }
 
 
-    private void nQueens(int row, Set<Integer> forbiddenCols) {
+    private void nQueens(int row, boolean[] forbiddenCols) {
 
         if (row >= board.size()) {
             List<String> solution = new ArrayList<>();
@@ -38,9 +39,9 @@ public class NQueens {
 
         for (int i = 0; i < board.size(); i++) {
 
-            if (!forbiddenCols.contains(i)) {
+            if (!forbiddenCols[i]) {
 
-                forbiddenCols.add(i);
+                forbiddenCols[i] = true;
                 board.get(row).set(i, "Q");
 
                 if (isValidBoard(board, row, i)) {
@@ -48,7 +49,7 @@ public class NQueens {
                 }
 
                 board.get(row).set(i, ".");
-                forbiddenCols.remove(i);
+                forbiddenCols[i] = false;
             }
         }
     }
