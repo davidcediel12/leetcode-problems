@@ -13,20 +13,23 @@ public class RotateImage {
         int rounds = -1;
         int size = matrix.length;
 
-        while(moves < size - 1){
+        while (moves < size - 1) {
 
             actualNumber = matrix[i][j];
             matrix[i][j] = tempNumber;
             tempNumber = actualNumber;
 
-            if(i == moves && j == moves) {
+            if (i == moves && j == moves) {
 
                 rounds++;
 
-                if(rounds >= size - moves - 1){
+                if (rounds >= size - (2 * moves) - 1) {
                     rounds = 0;
                     moves++;
 
+                    if (moves > size / 2) {
+                        return;
+                    }
                     i++;
                     j++;
                 }
@@ -35,12 +38,11 @@ public class RotateImage {
             }
 
 
-
-            Direction direction = calculateDirection(i, j,size, moves);
+            Direction direction = calculateDirection(i, j, size, moves);
 
             System.out.println("Direction: " + direction + " i: " + i + " j: " + j);
 
-            switch (direction){
+            switch (direction) {
                 case UP -> i--;
                 case DOWN -> i++;
                 case RIGHT -> j++;
@@ -50,23 +52,23 @@ public class RotateImage {
     }
 
 
-    private Direction calculateDirection(int i, int j, int size, int offset){
+    private Direction calculateDirection(int i, int j, int size, int offset) {
 
         int limit = size - offset - 1;
 
-        if(i == offset && j < limit){
+        if (i == offset && j < limit) {
             return Direction.RIGHT;
         }
 
-        if(j == limit && i < limit){
+        if (j == limit && i < limit) {
             return Direction.DOWN;
         }
 
-        if(i == limit && j > offset){
+        if (i == limit && j > offset) {
             return Direction.LEFT;
         }
 
-        if(i > offset && j == 0){
+        if (i > offset && j == offset) {
             return Direction.UP;
         }
 
@@ -74,7 +76,7 @@ public class RotateImage {
     }
 
 
-    enum Direction{
+    enum Direction {
         RIGHT, DOWN, LEFT, UP, NONE
     }
 }
