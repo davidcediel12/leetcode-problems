@@ -83,4 +83,5 @@ To view all the problems: [Problem Set](https://leetcode.com/problemset/)
   47. [Permutations II](src/main/java/com/example/demo/permutationstwo)
   48.  [Rotate Image](src/main/java/com/example/demo/rotateimage)
   49.  [Group Anagrams](src/main/java/com/example/demo/groupanagrams)
+  50.  [Pow(x, n)](src/main/java/com/example/demo/pow)
 </details>
